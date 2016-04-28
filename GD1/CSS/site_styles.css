@@ -25,9 +25,19 @@ body{
 
 #backdrop{
 	background: black;
-	opacity: 0.8;
+	opacity: 0.95;
 	width:100%;
 	height:100%;
+}
+
+#msg_backdrop{
+	visibility:hidden;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -75px;
+    margin-top: -20px;
+	color: lime;
 }
 
 .message{

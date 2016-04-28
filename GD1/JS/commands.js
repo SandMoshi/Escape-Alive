@@ -28,14 +28,43 @@ $(".action").on('click', function(){      // When an option (aka action) is chos
 	
 	if (chapter === 1) {
 		Chapter1(chosen,act); //Run the code for this chapter, using the chosen option
+	}	
+	if (chapter === 2){ 
+		Chapter2(chosen, act); //Run the code for this chapter, using the chosen option
+	}
+	
+	if (chapter === 3) {
+		Chapter3(chosen,act); //Run the code for this chapter, using the chosen option
 	}
 });
 
 function RemoveOverlay(){ //This makes the overlay appear when needed
-	$(".message").fadeOut("200");
-	$("#backdrop").fadeOut('500');
-	$("#overlay").fadeOut("100");
+	$(".message").fadeOut(200);
+	$("#backdrop").fadeOut(500);
+	$("#overlay").fadeOut(100);
 }
+
+function TransitionChapter(){
+	TransitionDark();
+	var chapter = localStorage.getItem("Chapter");
+	$("#msg_backdrop").text("Chapter " + chapter);		
+	$("#msg_backdrop").css("visibility","visible").delay(2000).fadeOut(400);
+	$("#backdrop").fadeOut(3000);
+	$("#overlay:visible").fadeOut(1000);
+}
+
+function TransitionDark(){
+    $(".message:visible").fadeOut(1);
+	$("#overlay:hidden").fadeIn(1);
+	$("#backdrop:hidden").fadeIn(2000);
+}
+
+function TransitionLight(){    
+	$("#backdrop:visible").fadeOut(1000);
+	$("#overlay:visible").fadeOut(1000);
+}
+
+
 
 function ShowChoices(delaytime){ //This makes the choices menu appear 
     if (delaytime === undefined) { //If no time given, do not delay
@@ -86,23 +115,64 @@ function Chapter1(chosen, act) { //This is the code for Chapter 1
 	if (act == 2){
 		$(".story-screen p").css("font-size","16px").text("Green ventures out of the safe house to a nearby market. He passes by some armed ISIS fighters patrolling the streets. Luckily he does not stand out and is not harassed. However he does not want to push his luck so he quickly purchases food and groceries and immediately returns to the safehouse.");
 		
-		//set the act to 3
-		act = 3;
-		
 		//Show continue button
-		$(".ContinueBox p").delay(3000).fadeIn(6000); //Show the continue button after a delay
-		$(".ContinueBox p").on('click',function(){ //Wait for continue to be clicked
-			Chapter1(null, act); //Go to the next act (situation)
+		$(".ContinueBox p").delay(3000).fadeIn(4000); //Show the continue button after a delay
+		$(".ContinueBox p").on('click',function(){ //Wait for continue to be 
+			$(".ContinueBox p").delay(0).fadeOut(400); //Show the continue button after a delay
+			Chapter2(null, 0); //Go to the next act (situation)
 		});
 	}
 }
-	
-	function Chapter2(chosen, act) { //This is the code for Chapter 2
-    localStorage.setItem("Chapter","2"); //Remember that we are on chapter 2 now
-	}
 
-/*
+	function Chapter2(chosen, act) { //This is the code for Chapter 2
+	if (act === 0){
+		localStorage.setItem("Chapter","2"); //Remember that we are on chapter 2 now
+        localStorage.setItem("Act",1);       //Remember we are on act 1 next		
+		
+		TransitionChapter(); //Screen goes black, displays new chapter, fades back to game
+		
+		Chapter2(null,1);
+	}
+	    //-------------------
+	if (act == 1){
+		$(".story-screen p").css("font-size","16px").text("GREEN was told BLUE, a local cooperating with the CIA, would reach out to GREEN. GREEN is told to keep a low profile until contact is made.");
+		
+		
+	   $(".action[value='1']").text("Wait several days until contact is made"); //Set option 1
+	   $(".action[value='2']").text("Begin exploring the city and gather information");    //Set option 2
+	   $(".action[value='2']").show();                                //Hide this option 
+	   $(".action[value='3']").text("");                              //Set option 3
+	   $(".action[value='3']").hide();                                //Hide this option 
+	   
+	   ShowChoices();
+	   
+		//set the act to 2
+		act = 2;
+		localStorage.setItem("Act", JSON.stringify(act)); //Store the act in memory
+	}
+		//-------------------
+	if (act == 2){
+		if (chosen === "1"){
+		   HideChoices(); //Hide the choices (since none are available)
+		   
+		   var act = 3;
+		   Chapter2("0",act);
+		}
+		else if (chosen === "2"){
+			$(".story-screen p").css("font-size","16px").text("You begin to explore the city and get your bearings and become familiar with all the intersections in the neighbourhood.");
+			
+		    //Show continue button
+			$(".ContinueBox p").delay(3000).fadeIn(4000); //Show the continue button after a delay
+			$(".ContinueBox p").on('click',function(){ //Wait for continue to be clicked
+			$(".ContinueBox p").fadeOut(400); //Show the continue button after a delay
+				// Success - move to Chapter 2 Act 3
+				var act = 3; 
+				Chapter2("0", act);
+			});
+		}
+	}	
+}
+
 $( document ).ready(function() {
    
 });
-*/
