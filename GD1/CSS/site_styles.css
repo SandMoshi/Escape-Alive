@@ -8,6 +8,7 @@ body{
 	background: white;
 	position: relative;
 	overflow: hidden;
+	
 }
 
 #level{
@@ -127,4 +128,21 @@ body{
     left: 330px;
 	/* visibility: hidden; */
 	display:none;
+}
+
+#skiptool{
+	margin-top: 10px;
+	margin-left: 10px;
+	color: red;
+}
+
+#skiptool input{
+	width: 50px;
+	margin-left:3px;
+	margin-right: 20px;
+}
+
+.Red{
+	background-color: red !important;
+	transition: all 300ms ease;
 }
