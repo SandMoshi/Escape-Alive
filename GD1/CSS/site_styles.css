@@ -5,16 +5,27 @@ body{
 
 #game_window{
 	height: 500px;
-	background: white;
+	background: black;
 	position: relative;
 	overflow: hidden;
-	
+	transition: all 200ms ease;
+}
+
+#grid{
+	height: 100%;
+	width: 100%;
+	background: url("../img/patterns/grid6.png");
+	background-repeat: repeat;
+	opacity: 0.15;
+	display:none;
+	position: absolute;
 }
 
 #level{
 	position: absolute;
 	left: 50%;
 	margin-left: -64px;
+	color: white;
 }
 
 #overlay{
@@ -101,7 +112,26 @@ body{
 .action:hover{
 	border: 5px solid lime;
 	cursor: pointer;
+	-webkit-animation-name: none;
 }
+
+.PulseOrange {
+	-webkit-animation-name: pulseBorder;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	-webkit-animation-direction: alternate;
+	-webkit-animation-duration: 2s;
+}
+
+@-webkit-keyframes pulseBorder {
+	from {
+		border: solid 3px black;
+	}
+	to{
+		border: solid 3px orange;
+	};
+}
+
 .story-screen{
 	background: gray;
 	border: 3px solid black;
@@ -120,6 +150,25 @@ body{
 	font-family: courier;
 	font-size: 18px;
 	margin: 5px;
+	animation: typewriter 4s steps(60, end);
+	white-space: nowrap;
+	overflow: hidden;
+	
+}
+
+@keyframes typewriter{
+	from{ width: 0;}
+	to { width: 95%;}
+}
+
+@keyframes typewriter2{
+	0%{width: 0;}
+	50%{width:0;}
+	100%{width:100;}
+}
+
+@keyframes blink{
+	to{opacity: 0.0;}
 }
 
 .ContinueBox p{
@@ -145,4 +194,14 @@ body{
 .Red{
 	background-color: red !important;
 	transition: all 300ms ease;
+}
+
+p{
+	cursor: default;
+	-webkit-touch-callout: none; //iOS
+	-webkit-user-select: none; //Chrome and Safari
+	-khtml-user-select: none; //Konquer
+	-moz-user-select:none; //Firefox
+	-ms-user-select:none; //IE or Edge
+	user-select: none; //Non-prefixed
 }

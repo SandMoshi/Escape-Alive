@@ -11,24 +11,25 @@
 	<div class="container">
 		<div class="row" id="game_window">
 			<h3 id="level">Background</h3>
+		 <div id="grid"></div>
 			<div id="overlay">
 			   <div id="backdrop"></div>
 			   <h1 id="msg_backdrop">Chapter x</h1>
 			   <div class="message">
-					<p class="alert">Click 'Continue' to Begin</p>
-					<p class="button OK">Continue</p>
+					<p class="alert" onselectstart="return false" unselectable="on">Click 'Continue' to Begin</p>
+					<p class="button OK" onselectstart="return false" unselectable="on">Continue</p>
 			   </div>
 			</div>
 			<div class="choice-column">
-			   <p class="action" value="1">Action 1</p>
-			   <p class="action" value="2">Action 2</p>
-			   <p class="action" value="3">Action 3</p>
+			   <p class="action PulseOrange" value="1" onselectstart="return false" unselectable="on">Action 1</p>
+			   <p class="action PulseOrange" value="2" onselectstart="return false" unselectable="on">Action 2</p>
+			   <p class="action PulseOrange" value="3" onselectstart="return false" unselectable="on">Action 3</p>
 			</div>
 			<div class="ContinueBox">
 			    <p class="continue button">Continue</p>
 			</div>
 			<div class="story-screen">
-			   <p>This is an test output message. Will be shown on screen.</p>
+			   <p onselectstart="return false" unselectable="on">This is an test output message. Will be shown on screen.</p>
 			</div>
 		</div>
 	</div>

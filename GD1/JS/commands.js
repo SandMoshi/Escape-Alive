@@ -42,6 +42,7 @@ function RemoveOverlay(){ //This makes the overlay appear when needed
 	$(".message").fadeOut(200);
 	$("#backdrop").fadeOut(500);
 	$("#overlay").fadeOut(100);
+	$("#grid").fadeIn(200);
 }
 
 function TransitionChapter(){
@@ -52,7 +53,7 @@ function TransitionChapter(){
 		$("#msg_backdrop").text("Chapter " + chapter);		
 		$("#msg_backdrop").css("visibility","visible").delay(1000).fadeOut(1000, function(){
 			$("#backdrop").fadeOut(3000);
-			$("#overlay:visible").delay(7000).fadeOut(1000);
+			$("#overlay:visible").delay(2000).fadeOut(1000);
 		});
 	});
 }
@@ -71,6 +72,9 @@ function HideChoices(){ //This makes the choices menu disappear
 function FlashRed(){ //This makes the background flash red
     console.log("About to flash red colours");
 	$("#game_window").addClass("Red");
+	$("div").promise().done(function() {
+		$("#game_window").removeClass("Red");
+	});
 	
 	// $("#game_window").delay(300).removeClass("Red");
 	// $("#game_window").addClass("Red");
@@ -248,6 +252,15 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 function Chapter3(chosen, act) { //This is the code for Chapter 3
 
 	$("#level").text("Chapter 3"); //Change the title (level)
+	
+	if (act === 0){
+		localStorage.setItem("Chapter","3"); //Remember that we are on chapter 2 now
+        localStorage.setItem("Act","0");       //Remember we are on act 1 next		
+		
+		TransitionChapter(); //Screen goes black, displays new chapter, fades back to game
+		
+        Chapter3(null,1);
+	}
 
 }
 //-------- "SKIP" FEATURE ---------------------
@@ -280,7 +293,6 @@ $('button[name = "goToBtn"]').on('click', function(){
 		Chapter4(null,act);
 	}
 });
-
 
 $( document ).ready(function() {
    
