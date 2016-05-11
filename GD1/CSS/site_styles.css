@@ -150,21 +150,8 @@ body{
 	font-family: courier;
 	font-size: 18px;
 	margin: 5px;
-	animation: typewriter 4s steps(60, end);
-	white-space: nowrap;
-	overflow: hidden;
-	
-}
-
-@keyframes typewriter{
-	from{ width: 0;}
-	to { width: 95%;}
-}
-
-@keyframes typewriter2{
-	0%{width: 0;}
-	50%{width:0;}
-	100%{width:100;}
+	word-spacing: -3px;
+    font-size: 15px;
 }
 
 @keyframes blink{

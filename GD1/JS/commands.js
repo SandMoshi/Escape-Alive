@@ -5,7 +5,7 @@ $("#overlay .button").on('click', function(){
 	RemoveOverlay();  //Get rid of dark overlay hiding game
 	ShowChoices();    //Show the choices available to make
    if (chapter === 0 || chapter === null) { //Do this at the start of a new game
-	   $(".story-screen p").text("Green arrives at safehouse in the middle of night. Smuggler drives into the night. Green surveys the safe house. Ordinary house abandoned months ago. Green arrives with no items except cash. Must go out to purchase food. Wearing light sweater and jeans. Some clothing and furniture was left behind but no food."); //Set the story
+	  ChangeStory("Green arrives at safehouse in the middle of night. Smuggler drives into the night. Green surveys the safe house. Ordinary house abandoned months ago. Green arrives with no items except cash. Must go out to purchase food. Wearing light sweater and jeans. Some clothing and furniture was left behind but no food."); //Set the story
 	   
 	   $(".action[value='1']").text("Go Out and Purchase Groceries"); //Set option 1
 	   $(".action[value='2']").text("Look for Items Left Behind");    //Set option 2
@@ -15,7 +15,14 @@ $("#overlay .button").on('click', function(){
    localStorage.setItem('Chapter', JSON.stringify(chapter));          //Store the chapter in browser memory so it can be called by other functions
 });
 
-$(".action").on('click', function(){      // When an option (aka action) is chosen do the following..
+function ChangeStory(str,fontsize){ //Takes the string and updates the story box and adds typewriter effect
+	$(".story-screen p").css("font-size", fontsize).text(str);
+	Typewriter();
+}
+
+$(".action").on('click', function(){      // When an option (aka action) is chosen do the following..	
+    // clearTimeout(timer); //Stop the typewriter animation
+	
 	HideChoices();                        // Hide the previous options
 	var chosen = $(this).attr("value");   // Take note of what option was chosen
 
@@ -86,13 +93,38 @@ function FlashRed(){ //This makes the background flash red
 	    // });
 }
 
+function Typewriter(){
+	
+  //Initialize all variable that will be used
+  var str = $('.story-screen p').html(), 
+  i = 0,
+  isTag,
+  text,
+  timer;       
+	$(".action" || ".continue").on("click", function(){
+		clearTimeout(timer);
+	});
+	(function type() {
+	   text = str.slice(0, ++i);
+	   if (text === str) return;
+	   $('.story-screen p').html(text);
+	   var char = text.slice(-1);
+	   if (char === '<') isTag = true;
+	   if (char === '>') isTag = false;
+	   if (isTag) return type();
+	   timer = setTimeout(type, 52);
+	}());
+	
+}
+
+
 //---------- BACKGROUND ---- CHAPTER 0 -----------------
 function Chapter0(chosen,act) { //This is the code for the start of a new game
     
 	if (chosen === "1"){
 		// Fail - Caught
 		FlashRed();
-		$(".story-screen p").css("font-size","16px").text("ISIS fighters are tipped off regarding a man wearing western clothing and having the appearance of a foreigner... In the middle of the night, Local morality enforcement members appear come knocking on the door. Green is interrogated before being captured and turned over to ISIS fighters. He is accused of being a spy and executed on camera... Mission Failed.");
+		ChangeStory("ISIS fighters are tipped off regarding a man wearing western clothing and having the appearance of a foreigner... In the middle of the night, Local morality enforcement members appear come knocking on the door. Green is interrogated before being captured and turned over to ISIS fighters. He is accused of being a spy and executed on camera... Mission Failed.","16px");
 	   
 	    HideChoices(); //Hide the choices (since none are available)
 	}
@@ -109,7 +141,7 @@ function Chapter1(chosen, act) { //This is the code for Chapter 1
 	$("#level").text("Chapter 1"); //Change the title (level)
 	
 	if (act == "1"){
-		$(".story-screen p").css("font-size","16px").text("Green finds some cosmetics and woman's black hair dye behind the mirror in the bathroom. A shaving brush, some toothpaste, and soap. Nothing useful in the kitchen or living room. One of the bedrooms contains men's pants and shirts. Green uses the dye to dye his beard and hair black to match the locals. Changes out of his jeans and t-shirt and into grey slacks with a linen shirt instead."); //Update story
+		ChangeStory("Green finds some cosmetics and woman's black hair dye behind the mirror in the bathroom. A shaving brush, some toothpaste, and soap. Nothing useful in the kitchen or living room. One of the bedrooms contains men's pants and shirts. Green uses the dye to dye his beard and hair black to match the locals. Changes out of his jeans and t-shirt and into grey slacks with a linen shirt instead.","16px"); //Update story
 		
 		 $(".action[value='1']").text("Go Out and Purchase Groceries"); //Set option 1
 	     $(".action[value='2']").hide();                                //Hide this option
@@ -124,7 +156,7 @@ function Chapter1(chosen, act) { //This is the code for Chapter 1
 	}
     //-------------------
 	if (act == 2){
-		$(".story-screen p").css("font-size","16px").text("Green ventures out of the safe house to a nearby market. He passes by some armed ISIS fighters patrolling the streets. Luckily he does not stand out and is not harassed. However he does not want to push his luck so he quickly purchases food and groceries and immediately returns to the safehouse.");
+		ChangeStory("Green ventures out of the safe house to a nearby market. He passes by some armed ISIS fighters patrolling the streets. Luckily he does not stand out and is not harassed. However he does not want to push his luck so he quickly purchases food and groceries and immediately returns to the safehouse.","16px");
 		
 		//Show continue button
 		$(".ContinueBox p").delay(3000).fadeIn(4000); //Show the continue button after a delay
@@ -150,7 +182,7 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 	}
 	    //-------------------
 	if (act == 1){
-		$(".story-screen p").css("font-size","16px").text("GREEN was told BLUE, a local cooperating with the CIA, would reach out to GREEN. GREEN is told to keep a low profile until contact is made.");
+		ChangeStory("GREEN was told BLUE, a local cooperating with the CIA, would reach out to GREEN. GREEN is told to keep a low profile until contact is made.","16px");
 		
 		
 	    $(".action[value='1']").text("Wait several days until contact is made"); //Set option 1
@@ -176,7 +208,7 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 		   Chapter2("0",act); //Go to act 3
 		}
 		else if (chosen === "2"){
-			$(".story-screen p").css("font-size","16px").text("You begin to explore the city and get your bearings and become familiar with all the intersections in the neighbourhood.");
+			ChangeStory("You begin to explore the city and get your bearings and become familiar with all the intersections in the neighbourhood.","16px");
 			
 		    //Show continue button
 			$(".ContinueBox p").delay(2000).fadeIn(2000); //Show the continue button after a delay
@@ -190,7 +222,7 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 	}
 
     if (act == 3){
-		$(".story-screen p").css("font-size","16px").text("After 7 days, BLUE has yet to make contact. GREEN becomes paranoid that BLUE has been captured and is being tortured to give information on his contacts. ");
+		ChangeStory("After 7 days, BLUE has yet to make contact. GREEN becomes paranoid that BLUE has been captured and is being tortured to give information on his contacts.","16px");
 		
 		$(".action[value='1']").text("Continue to wait for BLUE to show up"); //Set option 1
 	    $(".action[value='2']").text("Begin searching for a new safehouse");    //Set option 2
@@ -207,12 +239,12 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 	}	
 	if (act === 4){
 		if (chosen === "1"){
-			$(".story-screen p").css("font-size","16px").text("Day 10: ISIS fighters break down the door and storm your safehouse. You are captured. During torture an ISIS member describes how you will meet the same fate as BLUE who was captured a week earlier. After two weeks of torture you are executed in the middle of the city square and the video is posted online. The government denies sending any spies to the region. MISSION FAILED!");
+			ChangeStory("Day 10: ISIS fighters break down the door and storm your safehouse. You are captured. During torture an ISIS member describes how you will meet the same fate as BLUE who was captured a week earlier. After two weeks of torture you are executed in the middle of the city square and the video is posted online. The government denies sending any spies to the region. MISSION FAILED!","16px");
 			
 			HideChoices(); //Hide the choices (since none are available)
 		}
 		if (chosen === "2"){
-			$(".story-screen p").css("font-size","14px").text("You know there is resistance to ISIS amongst the former professionals, doctors, and businessmen in the city so you proceed to the former upscale market district where socialites and professionals continue to gather. While drinking tea at a cafe you meet a former professor from the local university. You tell him you ran a barbershop in town until the morality police shut it down and your family has since escaped the country... He offers you a rental room in his house.");
+			ChangeStory("You know there is resistance to ISIS amongst the former professionals, doctors, and businessmen in the city so you proceed to the former upscale market district where socialites and professionals continue to gather. While drinking tea at a cafe you meet a former professor from the local university. You tell him you ran a barbershop in town until the morality police shut it down and your family has since escaped the country... He offers you a rental room in his house.","14px");
 			
 			//Show continue button
 			$(".ContinueBox p").fadeIn(2000); //Show the continue button after a delay
@@ -225,7 +257,7 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 			});
 		}
 		if (chosen === "3"){
-			$(".story-screen p").css("font-size","16px").text("Day 10: You are returning to the safehouse after a day of surveilance when you hear yelling and a large commotion in the neighbhourhood. As you round the corner you see several pickup trucks of ISIS fighters funneling into your safe house. You narrowly avoid capture, quickly turning the corner before anyone spots you.");
+			ChangeStory("Day 10: You are returning to the safehouse after a day of surveilance when you hear yelling and a large commotion in the neighbhourhood. As you round the corner you see several pickup trucks of ISIS fighters funneling into your safe house. You narrowly avoid capture, quickly turning the corner before anyone spots you.","16px");
 			
             $(".action[value='1']").text("Find a New Safehouse"); //Set option 1
 			$(".action[value='2']").text(""); //Set option 2
