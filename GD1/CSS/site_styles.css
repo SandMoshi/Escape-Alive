@@ -154,6 +154,12 @@ body{
     font-size: 15px;
 }
 
+.showAllText{
+	position: absolute;
+	top: 420px;
+	left: 20px;
+}
+
 @keyframes blink{
 	to{opacity: 0.0;}
 }

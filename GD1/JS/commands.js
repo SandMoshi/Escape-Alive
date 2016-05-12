@@ -21,7 +21,6 @@ function ChangeStory(str,fontsize){ //Takes the string and updates the story box
 }
 
 $(".action").on('click', function(){      // When an option (aka action) is chosen do the following..	
-    // clearTimeout(timer); //Stop the typewriter animation
 	
 	HideChoices();                        // Hide the previous options
 	var chosen = $(this).attr("value");   // Take note of what option was chosen
@@ -114,7 +113,10 @@ function Typewriter(){
 	   if (isTag) return type();
 	   timer = setTimeout(type, 52);
 	}());
-	
+	$(".showAllText").on("click", function(){
+		clearTimeout(timer);
+		$(".story-screen p").html(str);
+	});	
 }
 
 
@@ -176,12 +178,12 @@ function Chapter2(chosen, act) { //This is the code for Chapter 2
 		localStorage.setItem("Chapter","2"); //Remember that we are on chapter 2 now
         localStorage.setItem("Act",1);       //Remember we are on act 1 next		
 		
-		TransitionChapter(); //Screen goes black, displays new chapter, fades back to game
+		TransitionChapter(Chapter2(0,1));   //Screen goes black, displays new chapter, fades back to game
+		};
 		
-        Chapter2(null,1);
-	}
 	    //-------------------
 	if (act == 1){
+		console.log("Chp2a1 started.")
 		ChangeStory("GREEN was told BLUE, a local cooperating with the CIA, would reach out to GREEN. GREEN is told to keep a low profile until contact is made.","16px");
 		
 		
