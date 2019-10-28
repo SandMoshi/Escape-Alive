@@ -1,0 +1,38 @@
+
+.screen{
+    padding: 2rem;
+    /* color: rgb(63, 255, 0); */
+    color: hsl(105, 85%, 50%);
+    text-shadow: 0 0 8px #C8C8C8;
+    font-family: '3270';
+    width: 80%;
+    margin: auto;
+}
+
+p{
+    font-family: '3270';
+}
+
+span.caret{
+    display: inline-block;
+    width: 0px;
+    height: 1.5rem;
+    margin-left: 0.25rem;
+    border-right: 1.25rem solid white;
+    border-color: hsl(105, 85%, 50%);
+}
+
+span.caret.blink{
+    animation: blink-caret 2s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to 
+    { border-color: hsl(105, 85%, 50%); }
+    75% { border-color: transparent }
+  }
+
+p.ascii{
+    font-size: 8px;
+}
+

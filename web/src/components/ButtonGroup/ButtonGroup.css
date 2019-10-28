@@ -1,0 +1,24 @@
+.btngroup{
+    position: absolute;
+    top: 75%;
+    left: 20%;
+    width: 60%;
+    margin: auto;
+    color: hsla(105, 85%, 50%, 50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.btngroup > div.button {
+    font-family: '3270';
+    font-size: 1.5rem;
+    border: hsla(105, 85%, 50%, 50%) 4px double;
+    display: initial;
+    padding: 0.25rem 1rem;
+}
+
+.btngroup > div.button:hover, .btngroup > div.button.selected{
+    border: solid 4px;
+    cursor: pointer;
+}

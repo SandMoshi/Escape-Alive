@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family:'3270';
+  src: local('3270SemiNarrow'), url(./assets/fonts/3270_fonts_2851f93/3270SemiNarrow.ttf) format('truetype');
+}
+
+@font-face {
+  font-family:'GreenScr';
+  src: local('Greenscr'), url(./assets/fonts/green_screen/Greenscr.ttf) format('truetype');
+}

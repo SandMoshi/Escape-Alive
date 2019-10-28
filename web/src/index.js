@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './assets/fonts/3270_fonts_2851f93/3270SemiNarrow.ttf';
+import './assets/fonts/green_screen/Greenscr.ttf';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
