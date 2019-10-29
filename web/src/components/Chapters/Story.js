@@ -27,44 +27,48 @@ var iRow; // initialise current row
 
 const typewriter = (textArray) => {
 
-        sContents = [''];
-        iRow = Math.max(0, iIndex - iScrollAt);
-    
-        while (iRow < iIndex) {
-            sContents[iIndex] += textArray[iRow++];
-            sContents[iIndex] = '';
-        }
-        setText((text) => {
-            text[iIndex] = <p key={`line-${iIndex}`}>{sContents[iIndex] + textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
-            return [...text];
-        });
+    sContents = [''];
+    iRow = Math.max(0, iIndex - iScrollAt);
 
-        if (iTextPos++ == iArrLength) {
-            iTextPos = 0;
-            iIndex++;
-            if (iIndex != textArray.length) {
-                iArrLength = textArray[iIndex].length;
-                setTimeout(() => {
-                    //Clear carat from previous line
-                    setText((text) => {
-                        text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}</p>;
-                        text[iIndex] = <p key={`line-${iIndex}`}><span className='caret'></span></p>
-                        return [...text];
-                    });
-                    //Write next line
-                    typewriter(textArray)
-                }, 1000);
-            }else{
-                //Make last line carat blink
+    while (iRow < iIndex) {
+        sContents[iIndex] += textArray[iRow++];
+        sContents[iIndex] = '';
+    }
+    setText((text) => {
+        text[iIndex] = <p key={`line-${iIndex}`}>{sContents[iIndex] + textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
+        return [...text];
+    });
+
+    if (iTextPos++ == iArrLength) {
+        iTextPos = 0;
+        iIndex++;
+        if (iIndex != textArray.length) {
+            setTimeout(() => {
+                //Clear carat from previous line
                 setText((text) => {
-                    text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}<span className='caret blink'></span></p>;
+                    text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}</p>;
+                    text[iIndex] = <p key={`line-${iIndex}`}><span className='caret'></span></p>
                     return [...text];
                 });
-            }
-        } else {
-            setTimeout(() => typewriter(textArray), iSpeed);
+                //Write next line
+                iArrLength = textArray[iIndex].length; //Next line's length
+                typewriter(textArray)
+            }, 1500);
+        }else{
+            //Make last line carat blink
+            setText((text) => {
+                text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}<span className='caret blink'></span></p>;
+                return [...text];
+            });
+            //Show the buttons after a delay
+            setTimeout( () => {
+                props.toggleButtons(true)
+            }, 750);
         }
+    } else {
+        setTimeout(() => typewriter(textArray), iSpeed);
     }
+}
 
     let lines = text.map( (line,index) => {
         return line

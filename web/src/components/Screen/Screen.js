@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './screen.css';
 import MainMenu from '../Chapters/MainMenu';
 import Story from '../Chapters/Story';
+import propTypes from 'prop-types';
 
 export default function Screen(props){
     const [text, setText] = useState('');
@@ -12,25 +13,24 @@ export default function Screen(props){
         console.log(props)
     },[])
 
-    useEffect( () => {
-        console.log('Props:', props);
-    }, [props])
-
     //Functions
 
     if(props.chapter === 0){
         return(
             <div className='screen'>
-                <MainMenu />
+                <MainMenu toggleButtons={props.toggleButtons} />
             </div>
         )
     }
     return(
         <div className='screen'>
-            <Story chapter={props.chapter} />
+            <Story chapter={props.chapter} toggleButtons={props.toggleButtons} />
         </div>
     )
 }
 
-
+Screen.propTypes = {
+    toggleButtons: propTypes.func.isRequired,
+    chapter: propTypes.number.isRequired,
+}
 
