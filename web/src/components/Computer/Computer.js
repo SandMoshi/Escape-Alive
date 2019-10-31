@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import './computer.css';
 import PropTypes from 'prop-types';
 import bg_1 from '../../assets/bg/Background_1.png';
-
 import Screen from '../Screen/Screen';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import story from '../../assets/story/story';
+import {Howl, Howler} from 'howler';
 
 export default function Computer(props){
     const [chapter, setChapter] = useState(0);

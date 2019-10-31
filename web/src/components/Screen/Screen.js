@@ -18,13 +18,13 @@ export default function Screen(props){
     if(props.chapter === 0){
         return(
             <div className='screen'>
-                <MainMenu toggleButtons={props.toggleButtons} />
+                <MainMenu toggleButtons={props.toggleButtons} Howl={props.Howl} />
             </div>
         )
     }
     return(
         <div className='screen'>
-            <Story chapter={props.chapter} toggleButtons={props.toggleButtons} />
+            <Story chapter={props.chapter} toggleButtons={props.toggleButtons} Howl={props.Howl} />
         </div>
     )
 }

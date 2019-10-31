@@ -16,6 +16,9 @@
     border: hsla(105, 85%, 50%, 50%) 4px double;
     display: initial;
     padding: 0.25rem 1rem;
+    /* text-shadow: 0 0 8px hsla(0, 0%, 78%, 50%); */
+    text-shadow: 0 0 8px hsl(104, 38%, 69%);
+    box-shadow: 0 0 8px hsla(104, 38%, 69%, 25%);
 }
 
 .btngroup > div.button:hover, .btngroup > div.button.selected{

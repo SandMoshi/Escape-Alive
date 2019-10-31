@@ -1,7 +1,7 @@
 const story = [
     {
         chapter: 0,
-        music: false,
+        music: 'Echoes_of_Time',
         textArray: [
             "☶⋀☷☱☶ Are you ready? ☷☶☐☶☵",
             "Please make your selection below",
