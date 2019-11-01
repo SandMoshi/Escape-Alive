@@ -16,7 +16,7 @@ import Echoes_of_Time from '../../assets/music/Echoes_of_Time.mp3';
 import Plato_s_Cave from '../../assets/music/Plato_s_Cave.mp3';
 import The_Deal_is_Going_Down from '../../assets/music/The_Deal_is_Going_Down.mp3';
 
-//Import SFX (as needed)
+//Import all SFX
 import sos_mayday from '../../assets/sfx/morse/mp3/daytripper-sos-mayday.mp3';
 import stations from '../../assets/sfx/morse/mp3/kwahmah-stations-broadcasting_noise-reduced.mp3';
 import wps30 from '../../assets/sfx/morse/mp3/morse-30wps.mp3';
@@ -28,16 +28,26 @@ import pi from '../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3';
 export default function MainMenu(props){
     const [text, setText] = useState([]);
     const [morseSFX, setMorseSFX] = useState(null);
-    const [SFXon, setSFXon] = useState(false); 
+    const [SFXon, setSFXon] = useState(false);
     var textArray = story[0].textArray;
+    var isMounted = false;
 
     useEffect(() => {
-        setupSFX();
+        isMounted = true;
+        let SFX = setupSFX();
         //Play bg music
+        let bgMusic = null;
         if(story[0].music){
-            playBackgroundMusic();
+            bgMusic = playBackgroundMusic();
         }
         typewriter(textArray);
+
+        //Unmounting
+        return () => {
+            isMounted = false;
+            SFX.stop();
+            bgMusic.stop();
+        }
     },[])
 
     useEffect(() => {
@@ -86,6 +96,7 @@ export default function MainMenu(props){
     var iRow; // initialise current row
 
     const typewriter = (textArray) => {
+            if(!isMounted){return};
             setSFXon(true);
             sContents = [''];
             iRow = Math.max(0, iIndex - iScrollAt);
@@ -138,12 +149,13 @@ export default function MainMenu(props){
             let bgMusic = new Howl({
                 src: [song],
                 volume: 0.25,
-                autoplay: true,
                 loop: true,
                 onloaderror: (err)=>{console.error(`music load error:${err}`)},
                 onload: function(){console.log('start')},
                 onplayerror: (err)=>{console.log(err)},
             })
+            bgMusic.play();
+            return bgMusic;
         }
 
         const setupSFX = () => {
@@ -159,6 +171,7 @@ export default function MainMenu(props){
                 onplayerror: (err)=>{console.log(err)},
             })
             setMorseSFX(morseSFX);
+            return morseSFX;
         }
 
         //Render Functions
@@ -175,7 +188,7 @@ export default function MainMenu(props){
                     </p>
                 </pre>
                 <br/>
-                <div style={{paddingLeft:'15px',textAlign: 'left', margin:'auto', width:'500px'}}>
+                <div style={{paddingLeft:'15px',textAlign: 'left', margin:'auto', width:'410px'}}>
                     {lines}
                 </div>
             </React.Fragment>

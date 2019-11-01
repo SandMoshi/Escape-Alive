@@ -3,10 +3,9 @@ import './screen.css';
 import MainMenu from '../Chapters/MainMenu';
 import Story from '../Chapters/Story';
 import propTypes from 'prop-types';
-
+ 
 export default function Screen(props){
     const [text, setText] = useState('');
-
 
     // On intial render
     useEffect(() => {

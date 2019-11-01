@@ -9,6 +9,7 @@
     margin: auto;
     word-break: break-all;
     text-align: left;
+    font-size: 24px;
 }
 
 p{
@@ -18,7 +19,7 @@ p{
 span.caret{
     display: inline-block;
     width: 0px;
-    height: 1.5rem;
+    height: 1.2rem;
     margin-left: 0.25rem;
     border-right: 1.25rem solid white;
     border-color: hsl(105, 85%, 50%);
