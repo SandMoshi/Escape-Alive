@@ -30,6 +30,7 @@ export default function Story(props){
     const [music, setMusic] = useState(null);
     const [morseSFX, setMorseSFX] = useState(null); //The SFX file name to play
     const [SFXon, setSFXon] = useState(false); //Determines if SFX is on/off
+    const [lastIntervalID, setLastIntervalID] = useState(null);
 
     // set up text to print, each item in array is new line
     // const [textArray, setTextArray] = useState(story[props.chapter].textArray);
@@ -37,6 +38,7 @@ export default function Story(props){
     var timeouts = [];
     var stopTyping;
 
+    //On Initial Load
     useEffect( () => {
         console.log('<Story /> Initial Render');
 
@@ -47,9 +49,6 @@ export default function Story(props){
             bgMusic = playBackgroundMusic();
         }
 
-        //Start displaying the text
-        // typewriter();
-
         //Unmounting
         return () => {
             SFX.stop();
@@ -58,8 +57,12 @@ export default function Story(props){
         
     },[])
 
+    //New chapter
     useEffect(() =>{
-        typewriter();
+        setText([]);//clear text
+        clearInterval(lastIntervalID); //stop any previous typing
+        let intervalID = newTypewriter();//start typing new chapter
+        setLastIntervalID(intervalID); //keep track of this typer
     },[props.chapter])
 
     // Start/Stop SFX
@@ -97,79 +100,58 @@ export default function Story(props){
         'pi': pi,
     }
 
-    var iSpeed = 100; // time delay of print out
+    var iSpeed = 80; // time delay of print out
     var iIndex = 0; // start printing array at this posision
     var iArrLength = textArray[0].length; // the length of the text array
-    var iScrollAt = 20; // start scrolling up at this many lines
-        
+    var iScrollAt = 20; // start scrolling up at this many lines       
     var iTextPos = 0; // initialise text position
-    var sContents = ''; // initialise contents variable
-    var iRow; // initialise current row
-    // var cumChars = 0; //all the characters printed since last screen wipe
 
-    const resetTypewriter = () => {
-        setText([]);
-        console.log(textArray);
-        iSpeed = 100; // time delay of print out
-        iIndex = 0; // start printing array at this posision
-        iArrLength = textArray[0].length; // the length of the text array
-        iScrollAt = 20; // start scrolling up at this many lines
-            
-        iTextPos = 0; // initialise text position
-        sContents = ''; // initialise contents variable
-        // var cumChars = 0; //all the characters printed since last screen wipe
-    }
-
-    const typewriter = () => {
-            console.log(props.chapter);
+    let newTypewriter = () => {
+        let intervalID = setInterval(()=>{   
             setSFXon(true);
-            sContents = [''];
-            iRow = Math.max(0, iIndex - iScrollAt);
-            while (iRow < iIndex) {
-                sContents[iIndex] += textArray[iRow++];
-                sContents[iIndex] = '';
-                // cumChars++;
-            }
+            iTextPos++;
             setText((text) => {
-                text[iIndex] = <p key={`line-${iIndex}`}>{sContents[iIndex] + textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
+                text[iIndex] = <p key={`line-${iIndex}`}>{textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
                 return [...text];
             });
-    
-            if (iTextPos++ == iArrLength) {
-                iTextPos = 0;
+            if (iTextPos == iArrLength) {
+                iTextPos = -1;
                 iIndex++;
                 if (iIndex != textArray.length) {
                     setSFXon(false);
-                    setTimeout(() => {
-                        //Clear carat from previous line
-                        setText((text) => {
-                            if(text[iIndex -1]){
-                                text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}</p>;
-                            }
-                            text[iIndex] = <p key={`line-${iIndex}`}><span className='caret'></span></p>
-                            return [...text];
-                        });
-                        //Write next line
-                        iArrLength = textArray[iIndex].length; //Next line's length
-                        typewriter()
-                    }, 1500);
-                    // console.log('timeouts', timeouts);
+                    //Clear carat from previous line
+                    setText((text) => {
+                        if(text[iIndex -1]){
+                            text[iIndex-1] = <p key={`line-${iIndex-1}`}>{textArray[iIndex-1].substring(0, iArrLength)}</p>;
+                        }
+                        text[iIndex] = <p key={`line-${iIndex}`}><span className='caret'></span></p>
+                        return [...text];
+                    });
+                    //Write next line
+                    iArrLength = textArray[iIndex].length; //Next line's length
                 }else{
                     //Make last line carat blink
                     setText((text) => {
-                        text[iIndex-1] = <p key={`line-${iIndex-1}`}>{sContents[iIndex-1] + textArray[iIndex-1].substring(0, iArrLength)}<span className='caret blink'></span></p>;
+                        text[iIndex-1] = <p key={`line-${iIndex-1}`}>{textArray[iIndex-1].substring(0, iArrLength)}<span className='caret blink'></span></p>;
                         return [...text];
                     });
                     //Stop SFX
                     setSFXon(false);
+                    stopTyping();
                     //Show the buttons after a delay
-                   setTimeout( () => {
-                        props.toggleButtons()
+                    setTimeout( () => {
+                        props.toggleButtons(true)
                     }, 750);
+                    return;
                 }
-            } else {
-                setTimeout(() => typewriter(), iSpeed);
             }
+        },iSpeed);
+
+        const stopTyping =  function(){
+            clearInterval(intervalID);
+            console.log('stopped!');
+        }
+        return intervalID;
     }
 
     const playBackgroundMusic = () => {
