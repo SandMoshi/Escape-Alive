@@ -14,7 +14,7 @@ export default function Screen(props){
 
     //Functions
 
-    if(props.chapter === 0){
+    if(props.chapter === "0"){
         return(
             <div className='screen'>
                 <MainMenu toggleButtons={props.toggleButtons} Howl={props.Howl} />

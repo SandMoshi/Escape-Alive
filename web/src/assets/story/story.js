@@ -1,5 +1,5 @@
-const story = [
-    {
+const story = {
+    "0": {
         chapter: 0,
         music: 'Echoes_of_Time',
         textArray: [
@@ -14,8 +14,8 @@ const story = [
             b: null,
         }
     },
-    {
-        chapter: 1,
+    "1": {
+        chapter: '1',
         music: 'Echoes_of_Time',
         textArray: [
             "June 2014 ",
@@ -31,13 +31,13 @@ const story = [
         options:{
             a: {
                 buttonText: 'Continue',
-                goToChapter: 2,
+                goToChapter: '1b',
             },
             b: null,
         }
     },
-    {
-        chapter: 2,
+    "1b" :{
+        chapter: '1b',
         music: 'Echoes_of_Time',
         textArray: [
             "An Al-Qaeda splinter group, known as ISIS and operating out of Syria, crossed over into Iraq and attacked Mosul. Forcing the Iraqi army to retreat. They quickly took control of Iraq's second largest city.",
@@ -51,12 +51,26 @@ const story = [
         options:{
             a: {
                 buttonText: 'Continue',
-                goToChapter: 3,
+                goToChapter: "2",
             },
             b: null,
         }
     },
-]
+    "2":{
+        chapter: "2",
+        music: 'Echoes_of_Time',
+        textArray: null,
+        imagePath:'iraqSyria3b',
+        imageFontSize: '0.35rem',
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "3",
+            },
+            b: null,
+        }
+    },
+}
 
 
 export default story;

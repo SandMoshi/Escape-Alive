@@ -23,6 +23,7 @@ import wps30 from '../../assets/sfx/morse/mp3/morse-30wps.mp3';
 import telecom from '../../assets/sfx/morse/mp3/timbre_telecom_heavily_edited.mp3';
 import transmission from '../../assets/sfx/morse/mp3/trebblofang__creepy_background_transmission.mp3';
 import pi from '../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3'; 
+import * as images from '../../assets/ascii/images';
 
 
 export default function Story(props){
@@ -31,6 +32,7 @@ export default function Story(props){
     const [morseSFX, setMorseSFX] = useState(null); //The SFX file name to play
     const [SFXon, setSFXon] = useState(false); //Determines if SFX is on/off
     const [lastIntervalID, setLastIntervalID] = useState(null);
+    const [imageContent, setImageContent] = useState(null);
 
     // set up text to print, each item in array is new line
     // const [textArray, setTextArray] = useState(story[props.chapter].textArray);
@@ -59,10 +61,15 @@ export default function Story(props){
 
     //New chapter
     useEffect(() =>{
+        setImageContent(null);
         setText([]);//clear text
         clearInterval(lastIntervalID); //stop any previous typing
-        let intervalID = newTypewriter();//start typing new chapter
-        setLastIntervalID(intervalID); //keep track of this typer
+        if(!story[props.chapter].textArray && story[props.chapter].imagePath){
+            drawImage();
+        }else{
+            let intervalID = newTypewriter();//start typing new chapter
+            setLastIntervalID(intervalID); //keep track of this typer
+        }
     },[props.chapter])
 
     // Start/Stop SFX
@@ -100,18 +107,19 @@ export default function Story(props){
         'pi': pi,
     }
 
-    var iSpeed = 80; // time delay of print out
-    var iIndex = 0; // start printing array at this posision
-    var iArrLength = textArray[0].length; // the length of the text array
-    var iScrollAt = 20; // start scrolling up at this many lines       
-    var iTextPos = 0; // initialise text position
+    
+    const newTypewriter = () => {
+        var iSpeed = 80; // time delay of print out
+        var iIndex = 0; // start printing array at this posision
+        var iArrLength = textArray && textArray[0].length; // the length of the text array
+        var iScrollAt = 20; // start scrolling up at this many lines       
+        var iTextPos = 0; // initialise text position
 
-    let newTypewriter = () => {
         let intervalID = setInterval(()=>{   
             setSFXon(true);
             iTextPos++;
             setText((text) => {
-                text[iIndex] = <p key={`line-${iIndex}`}>{textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
+                text[iIndex] = <p key={`line-${iIndex}`}>{textArray && textArray[iIndex].substring(0, iTextPos)}<span className='caret'></span></p>;
                 return [...text];
             });
             if (iTextPos == iArrLength) {
@@ -154,6 +162,37 @@ export default function Story(props){
         return intervalID;
     }
 
+    const drawImage = () => {
+        setSFXon(false);
+        const fontSize = story[props.chapter].imageFontSize;
+        let image = 
+        <pre>
+            <p className={'ascii ascii__animated collapsed'}  style={{textAlign: 'center',fontSize: fontSize}}>
+                {images[story[props.chapter].imagePath]}
+            </p>
+        </pre>
+        setImageContent(image);
+        //Display the image after a short delay
+        setTimeout(()=>{
+            console.log('remove collapsed');
+            let image = 
+            <pre>
+                <p className={'ascii ascii__animated'}  style={{textAlign: 'center',fontSize: fontSize}}>
+                    {images[story[props.chapter].imagePath]}
+                </p>
+            </pre>
+            setImageContent(image);
+            setSFXon(true);
+            //Stop music after 5seconds (animation duration)
+            setTimeout( () =>{ setSFXon(false) },2250);
+        },100)
+
+        //Show the buttons after a delay
+        setTimeout( () => {
+            props.toggleButtons(true);
+        }, 2000);
+    }
+
     const playBackgroundMusic = () => {
         let song = Music[story[props.chapter].music];
         let bgMusic = new Howl({
@@ -191,12 +230,13 @@ export default function Story(props){
 
     return(
         <React.Fragment>
+            {imageContent}
             {lines}
         </React.Fragment>
     )
 }
 
 Story.propTypes = {
-    chapter: propTypes.number.isRequired,
+    chapter: propTypes.string.isRequired,
     toggleButtons: propTypes.func.isRequired,  
 }

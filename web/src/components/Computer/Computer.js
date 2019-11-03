@@ -8,7 +8,7 @@ import story from '../../assets/story/story';
 import {Howl, Howler} from 'howler';
 
 export default function Computer(props){
-    const [chapter, setChapter] = useState(0);
+    const [chapter, setChapter] = useState("0");
     const [showButtons, toggleButtons] = useState(false);
     const [skipTo, setSkipTo] = useState('');
     const skipEl = useRef(null);
@@ -22,8 +22,9 @@ export default function Computer(props){
         <React.Fragment>
             <div>
                 <label htmlFor='chapter'>Go To:</label>
-                <input name='chapter' type="number" min={0} step={1} ref={skipEl}></input>
-                <button onClick={()=>{setChapter(Number(skipEl.current.value))}}>Go</button>
+                {/* <input name='chapter' type="number" min={0} step={1} ref={skipEl}></input> */}
+                <input name='chapter' type="text" ref={skipEl}></input>
+                <button onClick={()=>{setChapter(skipEl.current.value)}}>Go</button>
             </div>
             <div className='computer'>
                 <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} />
