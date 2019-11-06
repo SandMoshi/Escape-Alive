@@ -493,6 +493,159 @@ const story = {
             },
         }
     },
+    "11" :{
+        chapter: '11',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "There market isn't too far on foot and you arrive in under twenty minutes. It's an open air market lining the narrow winding streets with vendors selling evertyhing from fruit to bars of soap to cellphones.",
+            '','','','','','',
+            "You buy some food then casually walk around. You notice that many people walk quietly past the ISIS fighters standing guard on most corners, harassing anyone that catches their attention. You pretend to be preoccupied by your shopping as you walk by and luckily they don't pay you any attention. The agency's technical service teams always pick out simple but very effective disguises.",
+            '','','','','','',
+            "You finish your shopping, keeping mental notes everything you saw, number of fighters, and any chatter you overheard.",
+            '','','','','','',
+            "You return to the safehouse, your wall doesn't have any markings yet. You go inside and soon after begin transmitting the day's events to HQ."
+        ],
+        options:{
+            a: {
+                buttonText: 'Back',
+                goToChapter: "12",
+            },
+            b: null,
+        }
+    },
+    "12" :{
+        chapter: '12',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "The Next Day",
+            '','','','','','',
+            '','','','','','',
+            "While you wait for the asset to make contact you decide to focus on your other objective. Reconnaissance.",
+            '','','','','','',
+            "You are to take notes on troop movements, location of military defenses, bases, and any other useful military information. You also need to provide HUMINT. Intelligence collected from human sources.",
+            '','','','','','',
+            "You decide the best way to go about this is on foot once again. You travel to the historic old town, near the outdoor market. You make mental notes of all the checkpoints you come across but are careful to avoid them when possible. You also observer fighters standing near many intersections as well as technicals, weaponized pick-up trucks, patrolling major streets.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "12a",
+            },
+            b: null,
+        }
+    },
+    "12a" :{
+        chapter: '12a',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "However, most of this information can be inferred using satellite imagery and drones flying overheard.",
+            '','','','','','',
+            "What is really valuable is understanding the sentiment of the locals. Western governments are keen to gauge how strongly the civilians really support ISIS and how cooperative they'd be in helping drive ISIS out one day.",
+            '','','','','','',
+            "The population has only been ruled by an ISIS government for a few weeks and some civilians have been publicly applauding the return of vital services such as electricity and water but it remains to be seen what they truly think of the barbaric regime.",
+            '','','','','','',
+            "You know it's risky to approach strangers and to discuss such things on the street but sometimes it's a risk worth taking.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Talk to the Locals',
+                goToChapter: "12b",
+            },
+            b: {
+                buttonText: 'Keep to Yourself',
+                goToChapter: "12c",
+            },
+        }
+    },
+    "12b" :{
+        chapter: '12b',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "As you walk the streets you try to strike up conversation at market stalls with innocent questions such as \"Are you finding it hard to keep supplies stocked?\" As expected, most aren't willing to discuss politics and or say anything even close to negative about the regime. Their reputation for killing dissenters has spread quickly amongst the general population.",
+            '','','','','','',
+            "Some people are naively answer your questions openly before realizing what they've said and quickly hush up. Others go into long tirades against America and her western allies. Shortly after a quiet conservation with an elderly gentleman, your spine tingles. You look behind you to see one of the stall owners you had approached earlier talking to a fighter and pointing in your direction.",
+            '','','','','','',
+            "You walk in the opposite direction but the fighter begins to follow you. He shouts at you to stop. You turn down into an alleyway before breaking into a sprint. You run down the back street but now you can hear multiple voices calling after you. You reach a T in the alley. Do you go left or right?",
+        ],
+        options:{
+            a: {
+                buttonText: 'Go Left',
+                goToChapter: "12e",
+            },
+            b: {
+                buttonText: 'Go Right',
+                goToChapter: "12f",
+            },
+        }
+    },
+    "12c" :{
+        chapter: '12c',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "You'd love nothing more than to delve deep into conversation with some locals, but once again your training and instincts kick in. You realize that approaching strangers on the street in a busy market is not the right approach. Most people would assume you're trying to arrest enemies of the regime and wouldn't even bother talking to you.",
+            '','','','','','',
+            "It'd be better if you were somewhere where conversation about things, including politics, occurs organicly. Maybe one of the cafes that still remain. However, that will have to wait for another day. You decide to head back and check to see if the asset has made contact yet.",
+            '','','','','','',
+            "You return to the safehouse, still nothing. You're surprised it has taken this long but it's not unheard of.",
+            '','','','','','',
+            "You prepare your report and transmit your day's findings. Maybe you'll go to a cafe tomorrow.",
+        ],
+        options:{
+            a: {
+                buttonText: 'Talk to the Locals',
+                goToChapter: "12b",
+            },
+            b: {
+                buttonText: 'Keep to Yourself',
+                goToChapter: "12c",
+            },
+        }
+    },
+    "12e" :{
+        chapter: '12e',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "Both directions look the same and neither exit onto the street so you turn left and look for an escape.",
+            '','','','','','',
+            "After zig-zagging down the alley you run out of options and face a dead-end. You try the door to some apartments but all are locked and the metal doors don't have windows.",
+            '','','','','','',
+            "The fighters soon after catch up to you. The gig is up. You should have known better than to approach people on the street.",
+            '','','','','','',
+            "You give yourself up. You are arrested and taken to jail. At best you'll be tried as a dissident at worst you\'ll be hung as a spy.",
+        ],
+        options:{
+            a: {
+                buttonText: 'Back',
+                goToChapter: "12b",
+            },
+            b: {
+                buttonText: 'Continue',
+                goToChapter: "prison",
+            },
+        }
+    },
+    "12f" :{
+        chapter: '12f',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "Both directions look the same and neither exit onto the street so you turn right and hope there is an escape.",
+            '','','','','','',
+            "You zig-zag down the narrow alleyways, looking for an open door or exit onto the street. You've almost run out of options as you keep encountering dead ends before you round the corner and find yourself on the busy market street.",
+            '','','','','','',
+            "You breath a sigh of relief. One of the things you've been trained on is how to blend into the crowd and a busy market with barely enough room to walk through is the perfect place. You quickly hand a merchant a large bill and grab one shirt and hat and before long you've dissappeared amongst the horde of shoppers.",
+            '','','','','','',
+            "You make it back to your apartment and breath a sigh of relief. You won't make a mistake like that again anytime soon.",
+        ],
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "13",
+            },
+            b: null,
+        }
+    },
 }
 
 
