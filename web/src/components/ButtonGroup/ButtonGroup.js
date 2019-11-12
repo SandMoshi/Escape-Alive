@@ -17,23 +17,39 @@ export default function ButtonGroup(props){
         )
     }
 
+    function Skip(){
+        return(
+            <div className='button' onClick={()=>props.toggleSkip()}>
+                Skip
+            </div>
+        )
+    }
+
+    // const skipButton = <Button>Skip</Button>;
+
     if(props.showButtons){
        return(
-        <div className='btngroup'>
-            {story[props.chapter].options.a &&
-                <Button to={story[props.chapter].options.a.goToChapter} >
-                    {story[props.chapter].options.a.buttonText}
-                </Button>}
+        <React.Fragment>
+            <div className='btngroup'>
+                {story[props.chapter].options.a &&
+                    <Button to={story[props.chapter].options.a.goToChapter} >
+                        {story[props.chapter].options.a.buttonText}
+                    </Button>}
 
-            {story[props.chapter].options.b &&
-                <Button to={story[props.chapter].options.b.goToChapter} >
-                    {story[props.chapter].options.b.buttonText}
-                </Button>}
-        </div>
+                {story[props.chapter].options.b &&
+                    <Button to={story[props.chapter].options.b.goToChapter} >
+                        {story[props.chapter].options.b.buttonText}
+                    </Button>}
+            </div>
+        </React.Fragment>
        )
     }else{
        return(
-            <div className='btngroup'></div>
+            <React.Fragment>
+                <div className='btngroup'>
+                    {props.chapter != 0 ? <Skip /> : null}
+                </div>
+            </React.Fragment>
        )
     }
 }
@@ -42,4 +58,6 @@ ButtonGroup.propTypes = {
     setChapter: propTypes.func.isRequired,
     chapter: propTypes.number.isRequired,
     showButtons: propTypes.bool.isRequired,
+    toggleSkip: propTypes.func.isRequired,
+    skip: propTypes.bool.isRequired
 }

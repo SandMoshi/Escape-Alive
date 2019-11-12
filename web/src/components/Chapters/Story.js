@@ -64,6 +64,7 @@ export default function Story(props){
         setImageContent(null);
         setText([]);//clear text
         clearInterval(lastIntervalID); //stop any previous typing
+        props.setSkip(false);
         if(!story[props.chapter].textArray && story[props.chapter].imagePath){
             drawImage();
         }else{
@@ -84,6 +85,19 @@ export default function Story(props){
             morseSFX.stop();
         }
     },[SFXon])
+
+    //Listen for Skipping
+    useEffect( () => {
+        console.log('skip', props.skip);
+        if(props.skip !== true){
+            return;
+        }
+        else if(!story[props.chapter].textArray && story[props.chapter].imagePath){
+            return;
+        }
+        clearInterval(lastIntervalID); //stop any previous typing
+        drawText();
+    }, [props.skip])
 
     // Functions
     let Music = {
@@ -108,8 +122,10 @@ export default function Story(props){
     }
 
     
-    const newTypewriter = () => {
-        var iSpeed = 80; // time delay of print out
+    const newTypewriter = (iSpeed) => {
+        if(!iSpeed){
+            iSpeed = 80; // time delay of print out
+        }
         var iIndex = 0; // start printing array at this posision
         var iArrLength = textArray && textArray[0].length; // the length of the text array
         var iScrollAt = 20; // start scrolling up at this many lines       
@@ -160,6 +176,17 @@ export default function Story(props){
             console.log('stopped!');
         }
         return intervalID;
+    }
+
+    const drawText = () => {
+        props.setSkip(false);
+        setText(textArray.map( (item, index) => {
+            return item ? <p key={`line-${index}`}>{item}{index+1 == textArray.length ? <span className='caret'></span> : null}</p> : null
+        }))
+        setSFXon(false);
+        setTimeout( () => {
+            props.toggleButtons(true)
+        }, 50);
     }
 
     const drawImage = () => {
@@ -239,4 +266,6 @@ export default function Story(props){
 Story.propTypes = {
     chapter: propTypes.string.isRequired,
     toggleButtons: propTypes.func.isRequired,  
+    skip: propTypes.bool.isRequired,
+    setSkip: propTypes.func.isRequired,
 }

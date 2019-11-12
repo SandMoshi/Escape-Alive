@@ -10,7 +10,8 @@ import {Howl, Howler} from 'howler';
 export default function Computer(props){
     const [chapter, setChapter] = useState("0");
     const [showButtons, toggleButtons] = useState(false);
-    const [skipTo, setSkipTo] = useState('');
+    const [skip, setSkip] = useState(false);
+    // const [showSkip, setShowSkip] = useState(true);
     const skipEl = useRef(null);
     
     useEffect( () => {
@@ -18,18 +19,19 @@ export default function Computer(props){
         toggleButtons(false);
     },[chapter])
 
+    const toggleSkip = () => setSkip(!skip);
+
     return(
         <React.Fragment>
             <div>
                 <label htmlFor='chapter'>Go To:</label>
-                {/* <input name='chapter' type="number" min={0} step={1} ref={skipEl}></input> */}
                 <input name='chapter' type="text" ref={skipEl}></input>
                 <button onClick={()=>{setChapter(skipEl.current.value)}}>Go</button>
             </div>
             <div className='computer'>
-                <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} />
+                <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} toggleSkip={toggleSkip} skip={skip}/>
                 <div className='screen__bg'>
-                    <Screen chapter={chapter} toggleButtons={toggleButtons}/>
+                    <Screen chapter={chapter} toggleButtons={toggleButtons} skip={skip} setSkip={setSkip} />
                 </div>
                 <img className='computer__bg' src={bg_1} alt='computer monitor' />
             </div>

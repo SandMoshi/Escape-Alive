@@ -599,7 +599,7 @@ const story = {
             },
             b: {
                 buttonText: 'Keep to Yourself',
-                goToChapter: "12c",
+                goToChapter: "13",
             },
         }
     },

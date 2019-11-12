@@ -23,7 +23,7 @@ export default function Screen(props){
     }
     return(
         <div className='screen'>
-            <Story chapter={props.chapter} toggleButtons={props.toggleButtons} Howl={props.Howl} />
+            <Story chapter={props.chapter} toggleButtons={props.toggleButtons} Howl={props.Howl} skip={props.skip} setSkip={props.setSkip}/>
         </div>
     )
 }
@@ -31,5 +31,7 @@ export default function Screen(props){
 Screen.propTypes = {
     toggleButtons: propTypes.func.isRequired,
     chapter: propTypes.number.isRequired,
+    skip: propTypes.bool.isRequired,
+    setSkip: propTypes.func.isRequired,
 }
 
