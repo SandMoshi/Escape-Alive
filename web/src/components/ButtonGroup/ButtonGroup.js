@@ -3,6 +3,7 @@ import './ButtonGroup.css';
 import story from  '../../assets/story/story';
 import propTypes from 'prop-types';
 
+
 export default function ButtonGroup(props){
 
     const goToChapter = (to) => {
@@ -43,7 +44,8 @@ export default function ButtonGroup(props){
             </div>
         </React.Fragment>
        )
-    }else{
+    }
+    else if(story[props.chapter].textArray){
        return(
             <React.Fragment>
                 <div className='btngroup'>
@@ -52,6 +54,7 @@ export default function ButtonGroup(props){
             </React.Fragment>
        )
     }
+    else return null
 }
 
 ButtonGroup.propTypes = {
