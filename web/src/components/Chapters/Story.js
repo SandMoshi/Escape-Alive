@@ -124,7 +124,7 @@ export default function Story(props){
     
     const newTypewriter = (iSpeed) => {
         if(!iSpeed){
-            iSpeed = 80; // time delay of print out
+            iSpeed = 50; // time delay of print out
         }
         var iIndex = 0; // start printing array at this posision
         var iArrLength = textArray && textArray[0].length; // the length of the text array
