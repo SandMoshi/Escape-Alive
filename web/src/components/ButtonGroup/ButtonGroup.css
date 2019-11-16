@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    user-select: none;
 }
 
 .btngroup > div.button {
@@ -24,4 +25,18 @@
 .btngroup > div.button:hover, .btngroup > div.button.selected{
     border: solid 4px;
     cursor: pointer;
+}
+
+@media screen and (max-height: 800px) {
+    .btngroup{
+        max-width: 90%;
+        top: 80%;
+    }
+
+    .btngroup > div.button {
+        font-size: 10px;
+        text-shadow: 0 0 4px hsl(104, 38%, 69%);
+        box-shadow: 0 0 4px hsla(104, 38%, 69%, 25%);
+    }
+
 }

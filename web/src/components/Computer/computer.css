@@ -12,10 +12,6 @@ div.computer > * {
 
 .computer__bg{
     display: block;
-    /* position: absolute; */
-    /* top: 0; */
-    /* left: 0; */
-    /* transform: translate(-50%,-50%); */
     height: 80vh;
     width: calc(80vh * 1.6);
     z-index: 1 !important;
@@ -26,9 +22,6 @@ div.computer > * {
     width: calc(80vh * 1.59 - 60px);
     height: calc(80vh - 60px);
     position: absolute;
-    /* top: 0; */
-    /* left: 0; */
-    /* transform: translate(-50%,-50%); */
     background-image: radial-gradient(
         hsla(120, 100%, 20%, 0.25), black 100%
       );
@@ -49,11 +42,48 @@ div.computer > * {
       transparent 3px,
       transparent 4px
     );
-/*     background: repeating-linear-gradient(
-      0deg,
-      rgb(0, 0,0, 0.15),
-      rgb(255, 255,255, 0.10) 1px,
-      transparent 1px,
-      transparent 2px
-    ); */
   }
+
+.menuText{
+    padding-left: 15px;
+    text-align: left;
+    margin: auto;
+    width: 410px;
+}
+
+div.rotatePrompt{
+    height: 100vh;
+    background: black;
+    color: #aaaaaa;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 2rem;
+}
+
+div.rotatePrompt > h3{
+    color: lime;
+}
+
+img.rotateIcon{
+    filter: invert();
+    width: 40%;
+}
+
+@media screen and (orientation: landscape) and (max-height: 800px) {
+    .computer__bg{
+        height: 96vh;
+        max-height: 100vh;
+        margin: 1vh auto 0px auto;
+    }
+
+    .screen__bg{
+        height:92vh;
+        width: calc(80vh * 1.59);
+    }
+
+    .menuText{
+        width: 205px;
+    }
+}

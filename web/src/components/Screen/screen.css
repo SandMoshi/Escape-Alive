@@ -44,9 +44,43 @@ p.ascii__animated{
     max-height: 1000px;
     overflow: hidden;
     transition-delay: 2s;
-    transition: all linear 5s;
+    transition: max-height linear 5s;
 }
 
 p.collapsed{
     max-height: 0px !important;
 }
+
+@media screen and (max-height: 800px) {
+    .screen{
+        font-size: 11px;
+    }
+
+    p.ascii{
+        font-size: 4px;
+    }
+
+    span.caret{
+        height: 1.2rem;
+        margin-left: 2px;
+        height: 0.65rem;
+        border-width: 0.6rem;
+    }
+
+    p.ascii__animated{
+        font-size: 3px !important;
+     }
+}
+
+
+/* @media screen and (orientation: landscape) and (max-height: 800px) {
+    .computer__bg{
+        height: 90vh;
+        max-height: 99vh;
+    }
+
+    .screen__bg{
+        height:90vh;
+        width: calc(80vh * 1.59);
+    }
+} */

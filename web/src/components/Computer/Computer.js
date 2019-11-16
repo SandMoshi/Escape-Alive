@@ -6,6 +6,7 @@ import Screen from '../Screen/Screen';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
 import story from '../../assets/story/story';
 import {Howl, Howler} from 'howler';
+import rotatePhoneIcon from '../../assets/icons/phone-position-rotation-from-horizontal-to-vertical.svg';
 
 export default function Computer(props){
     const [chapter, setChapter] = useState("0");
@@ -23,10 +24,16 @@ export default function Computer(props){
 
     return(
         <React.Fragment>
-            <div>
+            {/* <div>
                 <label htmlFor='chapter'>Go To:</label>
                 <input name='chapter' type="text" ref={skipEl}></input>
                 <button onClick={()=>{setChapter(skipEl.current.value)}}>Go</button>
+            </div> */}
+            <div className='rotatePrompt'>
+                <h3>Welcome to Escape ISIS</h3>
+                <p>This game must be played in landscape mode</p>
+                <img className='rotateIcon' src={rotatePhoneIcon} alt='Rotate Phone to Landscape'/>
+                <p>Please rotate your screen</p>
             </div>
             <div className='computer'>
                 <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} toggleSkip={toggleSkip} skip={skip}/>

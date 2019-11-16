@@ -59,7 +59,7 @@ export default function ButtonGroup(props){
 
 ButtonGroup.propTypes = {
     setChapter: propTypes.func.isRequired,
-    chapter: propTypes.number.isRequired,
+    chapter: propTypes.string.isRequired,
     showButtons: propTypes.bool.isRequired,
     toggleSkip: propTypes.func.isRequired,
     skip: propTypes.bool.isRequired

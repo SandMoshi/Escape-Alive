@@ -30,7 +30,7 @@ export default function Screen(props){
 
 Screen.propTypes = {
     toggleButtons: propTypes.func.isRequired,
-    chapter: propTypes.number.isRequired,
+    chapter: propTypes.string.isRequired,
     skip: propTypes.bool.isRequired,
     setSkip: propTypes.func.isRequired,
 }

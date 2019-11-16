@@ -146,11 +146,11 @@ const story = {
         ],
         options:{
             a: {
-                buttonText: 'Yes Sir',
+                buttonText: 'Yes Sir, of course!',
                 goToChapter: "4",
             },
             b: {
-                buttonText: 'I"m not ready',
+                buttonText: 'I\'m not ready...',
                 goToChapter: "3b",
             },
         }

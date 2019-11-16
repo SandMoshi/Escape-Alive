@@ -188,7 +188,7 @@ export default function MainMenu(props){
                     </p>
                 </pre>
                 <br/>
-                <div style={{paddingLeft:'15px',textAlign: 'left', margin:'auto', width:'410px'}}>
+                <div className='menuText'>
                     {lines}
                 </div>
             </React.Fragment>

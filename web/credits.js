@@ -66,3 +66,11 @@ export const music = [
         used: false,   
     },
 ]
+
+export const images = [
+    {
+        title: 'Freepik',
+        author: '',
+        requiredAttribution: '<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>'
+    }
+]
