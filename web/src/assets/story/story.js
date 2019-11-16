@@ -9,7 +9,7 @@ const story = {
         options:{
             a: {
                 buttonText: 'I\'m Ready',
-                goToChapter: '1',
+                goToChapter: '0b',
             },
             b: {
                 buttonText: 'I\'m not sure',
@@ -30,7 +30,21 @@ const story = {
         options:{
             a: {
                 buttonText: 'Okay, I\'m Ready',
-                goToChapter: 1,
+                goToChapter: '0b',
+            },
+            b: null,
+        }
+    },
+    "0b":{
+        chapter: "0b",
+        music: 'Echoes_of_Time',
+        textArray: null,
+        imagePath:'chapter1',
+        imageFontSize: '0.4rem',
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "1",
             },
             b: null,
         }
