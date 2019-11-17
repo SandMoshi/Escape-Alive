@@ -27,6 +27,15 @@
     cursor: pointer;
 }
 
+.buttons-enter{
+    opacity: 0;
+}
+
+.buttons-enter-active{
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
 @media screen and (max-height: 800px) {
     .btngroup{
         max-width: 90%;

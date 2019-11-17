@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './ButtonGroup.css';
 import story from  '../../assets/story/story';
 import propTypes from 'prop-types';
+import {CSSTransition} from 'react-transition-group';
 
 
 export default function ButtonGroup(props){
@@ -12,7 +13,11 @@ export default function ButtonGroup(props){
 
     function Button(props){
         return(
-            <div className='button' onClick={ () => goToChapter(props.to)}>
+            <div className='button' onClick={ () => 
+                {
+                    props.toggleButtons(false);
+                    goToChapter(props.to)}
+                }>
                 {props.children || null}
             </div>
         )
@@ -30,19 +35,24 @@ export default function ButtonGroup(props){
 
     if(props.showButtons){
        return(
-        <React.Fragment>
-            <div className='btngroup'>
-                {story[props.chapter].options.a &&
-                    <Button to={story[props.chapter].options.a.goToChapter} >
-                        {story[props.chapter].options.a.buttonText}
-                    </Button>}
+            <CSSTransition 
+                in={props.showButtons}
+                timeout={300}
+                classNames='buttons'
+                unmountOnExit
+            >
+                <div className='btngroup'>
+                    {story[props.chapter].options.a &&
+                        <Button to={story[props.chapter].options.a.goToChapter} toggleButtons={props.toggleButtons} >
+                            {story[props.chapter].options.a.buttonText}
+                        </Button>}
 
-                {story[props.chapter].options.b &&
-                    <Button to={story[props.chapter].options.b.goToChapter} >
-                        {story[props.chapter].options.b.buttonText}
-                    </Button>}
-            </div>
-        </React.Fragment>
+                    {story[props.chapter].options.b &&
+                        <Button to={story[props.chapter].options.b.goToChapter} toggleButtons={props.toggleButtons}>
+                            {story[props.chapter].options.b.buttonText}
+                        </Button>}
+                </div>
+            </CSSTransition>
        )
     }
     else if(story[props.chapter].textArray){
@@ -61,6 +71,7 @@ ButtonGroup.propTypes = {
     setChapter: propTypes.func.isRequired,
     chapter: propTypes.string.isRequired,
     showButtons: propTypes.bool.isRequired,
+    toggleButtons: propTypes.func.isRequired,
     toggleSkip: propTypes.func.isRequired,
     skip: propTypes.bool.isRequired
 }

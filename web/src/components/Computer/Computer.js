@@ -36,7 +36,7 @@ export default function Computer(props){
                 <p>Please rotate your screen</p>
             </div>
             <div className='computer'>
-                <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} toggleSkip={toggleSkip} skip={skip}/>
+                <ButtonGroup chapter={chapter} setChapter={setChapter} showButtons={showButtons} toggleButtons={toggleButtons} toggleSkip={toggleSkip} skip={skip}/>
                 <div className='screen__bg'>
                     <Screen chapter={chapter} toggleButtons={toggleButtons} skip={skip} setSkip={setSkip} />
                 </div>
