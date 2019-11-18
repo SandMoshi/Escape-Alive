@@ -65,6 +65,13 @@ export const music = [
         requiredAttribution: null,
         used: false,   
     },
+    {
+        title: 'Scraping The Sewer',
+        author: 'Doug Maxwell/Media Rights Production',
+        source: 'https://www.youtube.com/audiolibrary/music?nv=1',
+        requiredAttribution: null,
+        used: true,   
+    },
 ]
 
 export const images = [

@@ -613,7 +613,8 @@ const story = {
             },
             b: {
                 buttonText: 'Keep to Yourself',
-                goToChapter: "13",
+                // goToChapter: "13",
+                goToChapter: "TBD",
             },
         }
     },
@@ -655,11 +656,40 @@ const story = {
         options:{
             a: {
                 buttonText: 'Continue',
-                goToChapter: "13",
+                goToChapter: "TBD",
+                // goToChapter: "13",
             },
             b: null,
         }
     },
+    "prison":{
+        chapter: "prison",
+        music: 'Scraping_The_Sewer',
+        textArray: null,
+        imagePath:'prison1',
+        imageFontSize: '1rem',
+        options:{
+            a: {
+                buttonText: 'Main Menu',
+                goToChapter: "0",
+            },
+            b: null,
+        }
+    },
+    "TBD":{
+        chapter: "TBD",
+        music: 'Echoes_of_Time',
+        textArray: null,
+        imagePath:'TBD',
+        imageFontSize: '1rem',
+        options:{
+            a: {
+                buttonText: 'Main Menu',
+                goToChapter: "0",
+            },
+            b: null,
+        }
+    }
 }
 
 

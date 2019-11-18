@@ -1,11 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './computer.css';
-import PropTypes from 'prop-types';
 import bg_1 from '../../assets/bg/Background_1.png';
 import Screen from '../Screen/Screen';
 import ButtonGroup from '../ButtonGroup/ButtonGroup';
-import story from '../../assets/story/story';
-import {Howl, Howler} from 'howler';
 import rotatePhoneIcon from '../../assets/icons/phone-position-rotation-from-horizontal-to-vertical.svg';
 
 export default function Computer(props){
@@ -24,11 +21,11 @@ export default function Computer(props){
 
     return(
         <React.Fragment>
-            {/* <div>
+            <div>
                 <label htmlFor='chapter'>Go To:</label>
                 <input name='chapter' type="text" ref={skipEl}></input>
                 <button onClick={()=>{setChapter(skipEl.current.value)}}>Go</button>
-            </div> */}
+            </div>
             <div className='rotatePrompt'>
                 <h3>Welcome to Escape ISIS</h3>
                 <p>This game must be played in landscape mode</p>
@@ -45,7 +42,3 @@ export default function Computer(props){
         </React.Fragment>
     )
 }
-
-// Computer.PropTypes = {
-    
-// }

@@ -15,6 +15,7 @@ import Echoes_of_Time_v2 from '../../assets/music/Echoes_of_Time_v2.mp3';
 import Echoes_of_Time from '../../assets/music/Echoes_of_Time.mp3';
 import Plato_s_Cave from '../../assets/music/Plato_s_Cave.mp3';
 import The_Deal_is_Going_Down from '../../assets/music/The_Deal_is_Going_Down.mp3';
+import Scraping_The_Sewer from '../../assets/music/Scraping_The_Sewer.mp3';
 
 //Import all SFX
 import sos_mayday from '../../assets/sfx/morse/mp3/daytripper-sos-mayday.mp3';
@@ -22,7 +23,8 @@ import stations from '../../assets/sfx/morse/mp3/kwahmah-stations-broadcasting_n
 import wps30 from '../../assets/sfx/morse/mp3/morse-30wps.mp3';
 import telecom from '../../assets/sfx/morse/mp3/timbre_telecom_heavily_edited.mp3';
 import transmission from '../../assets/sfx/morse/mp3/trebblofang__creepy_background_transmission.mp3';
-import pi from '../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3'; 
+import pi from '../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3';
+import jailSFX from '../../assets/sfx/jail/JailCellClose_combined.mp3'; 
 import * as images from '../../assets/ascii/images';
 
 
@@ -53,7 +55,9 @@ export default function Story(props){
 
         //Unmounting
         return () => {
-            SFX.stop();
+            if(SFX){
+                SFX.stop();
+            }
             bgMusic.stop();
         }
         
@@ -64,12 +68,33 @@ export default function Story(props){
         setImageContent(null);
         setText([]);//clear text
         clearInterval(lastIntervalID); //stop any previous typing
+        let jailSFX = null;
         props.setSkip(false);
         if(!story[props.chapter].textArray && story[props.chapter].imagePath){
             drawImage();
         }else{
             let intervalID = newTypewriter();//start typing new chapter
             setLastIntervalID(intervalID); //keep track of this typer
+        }
+        if(props.chapter === 'prison'){
+            const SFXfile = SFX.jail;
+            jailSFX = new Howl({
+                src: [SFXfile],
+                volume: 0.50,
+                loop: false,
+                preload: true,
+                onloaderror: (err)=>{console.error(`music load error:${err}`)},
+                onload: function(){console.log('start jail')},
+                onplayerror: (err)=>{console.log(err)},
+            })
+            jailSFX.play();
+        }
+
+        //Unmounting
+        return () => {
+            if(jailSFX){
+                jailSFX.stop();
+            }
         }
     },[props.chapter])
 
@@ -78,6 +103,9 @@ export default function Story(props){
         if(!morseSFX){
             console.log('morseSFX:', morseSFX);
             return;
+        }
+        if(SFXon && props.chapter === 'prison'){
+            setSFXon(false);
         }
         if(SFXon === true){
             morseSFX.play();
@@ -109,7 +137,8 @@ export default function Story(props){
         'Echoes_of_Time': Echoes_of_Time,
         'Echoes_of_Time_v2': Echoes_of_Time_v2,
         'Plato_s_Cave': Plato_s_Cave,
-        'The_Deal_is_Going_Down': The_Deal_is_Going_Down
+        'The_Deal_is_Going_Down': The_Deal_is_Going_Down,
+        'Scraping_The_Sewer': Scraping_The_Sewer
     }
 
     let SFX = {
@@ -119,6 +148,7 @@ export default function Story(props){
         'telecom': telecom,
         'transmission': transmission,
         'pi': pi,
+        'jail': jailSFX,
     }
 
     
