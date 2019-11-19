@@ -1,5 +1,5 @@
-#ESCAPE ALIVE - README
-####Created By: Sand Moshi
+# ESCAPE ALIVE - README
+#### Created By: Sand Moshi
 
 ## Table of Contents
 * Status
