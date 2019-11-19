@@ -101,4 +101,4 @@ If you would like to contribute to this project, feel free to make a pull-reques
 
 ## License
 
-You can edit this game for your own pleasure but please do use it for commercial purposes or to pass it off as your own work. 
+You can edit this game for your own pleasure but please do not use it for commercial purposes or to pass it off as your own work. Please credit me as the original author in any fork and reproduction.

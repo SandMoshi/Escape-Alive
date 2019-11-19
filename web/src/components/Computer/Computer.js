@@ -21,11 +21,11 @@ export default function Computer(props){
 
     return(
         <React.Fragment>
-            <div>
+            {/* <div>
                 <label htmlFor='chapter'>Go To:</label>
                 <input name='chapter' type="text" ref={skipEl}></input>
                 <button onClick={()=>{setChapter(skipEl.current.value)}}>Go</button>
-            </div>
+            </div> */}
             <div className='rotatePrompt'>
                 <h3>Welcome to Escape ISIS</h3>
                 <p>This game must be played in landscape mode</p>
