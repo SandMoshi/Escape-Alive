@@ -613,8 +613,7 @@ const story = {
             },
             b: {
                 buttonText: 'Keep to Yourself',
-                // goToChapter: "13",
-                goToChapter: "TBD",
+                goToChapter: "13",
             },
         }
     },
@@ -651,13 +650,188 @@ const story = {
             '','','','','','',
             "You breath a sigh of relief. One of the things you've been trained on is how to blend into the crowd and a busy market with barely enough room to walk through is the perfect place. You quickly hand a merchant a large bill and grab one shirt and hat and before long you've dissappeared amongst the horde of shoppers.",
             '','','','','','',
-            "You make it back to your apartment and breath a sigh of relief. You won't make a mistake like that again anytime soon.",
+            "You make it back to your apartment and breath a sigh of relief. You won't make a mistake like that again.",
         ],
         options:{
             a: {
                 buttonText: 'Continue',
-                goToChapter: "TBD",
-                // goToChapter: "13",
+                goToChapter: "13",
+            },
+            b: null,
+        }
+    },
+    "13" :{
+        chapter: '13',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "The Next Day",
+            '','','','','','',
+            '','','','','','',
+            "It's been several days but the local asset still hasn't signaled they are ready to meet you. Your senses are telling you something is wrong. After years of training and service, you've also been told to trust the process. When it's safe to do so, the asset will be sure to leave you a signal as planned.",
+            '','','','','','',
+            "In the meantime, you are still able to give HQ plenty of details simply by going on discreet scouting excursions. One of the most common and reliable locations where intel is gathered, ever since the early days of modern espionage has been cafes and restaurants.",
+            '','','','','','',
+            "In the dossier you read before deployment, several spots including a nearby cafe were highlighted as potential spots frequented by the locals. You run through your cover story one more time and head out on foot."
+        ],
+        options:{
+            a: {
+                buttonText: '13a',
+                goToChapter: "Walk to the Cafe",
+            },
+            b: null,
+        }
+    },
+    "13a" :{
+        chapter: '13a',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "20 Minutes Later",
+            '','','','','','',
+            '','','','','','',
+            "You find yourself sitting in stiff but padded wooden chair across from an older man with a greying beard in a partially shaded cafe surrounded by the sounds of dice being thrown and pips emphatically moved across backgammon boards. Without being prompted, a waiter comes up and places a small cup of tea in front of you. As if one would ever drink anything else, even in the sweltering heat.",
+            '','','','','','',
+            "A backgammon board seperates you from the older man across the table. Before long you're deep into your third game with the man, whose luck comes and goes but not his vigor for calling out the values of each dice roll. You overhear some conservations about the beheadings and recent captures of Iraqi villages but nothing worthwhile.",
+            '','','','','','',
+            "You find that most of the men here are indifferent to the ongoings of ISIS and would rather fixate on gambling and socializing. Late in the afternoon, only a couple of the younger men get up and leave to pray, you find out that most devout men no longer even congregate here, fearing that the moral police would not look kindly on Muslim men gambling and forgoing prayers and spend their days at home."
+        ],
+        options:{
+            a: {
+                buttonText: 'Check the Time',
+                goToChapter: "14",
+            },
+            b: {
+                buttonText: 'Leave',
+                goToChapter: "14",
+            },
+        }
+    },
+    "14" :{
+        chapter: '14',
+        music: 'Echoes_of_Time',
+        textArray: [
+            '','','','','','',
+            "You check the time. Realizing the sun will set in the next hour you decide to wrap things up and thank the older man for his time and competition.",
+            '','','','','','',
+            "You waive for your bill and large middle-aged man walks up to you with a large smile. He introduces himself as the owner of the cafe and thanks you for visiting his cafe. You can tell by his body language he knows you're a newcomer here. He likely only gets the same handful of regulars.",
+            '','','','','','',
+            "He asks you a couple innoculous questions about where you're from and seems to accept your pre-meditated answers with a smile. As you both walk towards the exit he asks if there is anything you need, maybe something to eat, or a place to stay. You politely decline but reaffirms his offer for lodging, letting you know he has an apartment above the cafe that is available. You politely decline once again before shaking hands and heading off.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Walk Home',
+                goToChapter: "15",
+            },
+            b: null,
+        }
+    },
+    "15" :{
+        chapter: '15',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "20 minutes later",
+            '','','','','','',
+            '','','','','','',
+            "You stop at the corner of your apartment building. Across the street, on the short wall surrouding the building is a simple cahlk drawn symbol. The greek letter omega. You were told that the local asset would signal he'd like to meet the following day by leaving an omega symbol nearby. Once the signal has been placed, you were to meet them at a predetermined discreet location the next day at 10am.",
+            '','','','','','',
+            "However there is a problem. Your handlers were clear that you were looking for an uppercase omega symbol but what was left was the more commonly known lower-case omega symbol. The one commonly found in math textbooks and popular culture. You tell yourself it's just the local asset being careless or maybe a miscommunication.",
+            '','','','','','',
+            "Your gut is telling you something is wrong but maybe you're just being paranoid. Either way, you'll have all night to decide. You walk survey the neighbourhood and don't see any surveillance so you quickly slip into the apartment by climbing over the back fence.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Skip the meeting',
+                goToChapter: "15a",
+            },
+            b: {
+                buttonText: 'Meet with the Asset',
+                goToChapter: "15b",
+            },
+        }
+    },
+    "15a" :{
+        chapter: '15a',
+        music: 'Echoes_of_Time',
+        textArray: [
+            "As with most things in the espionage world, it is expected that sometimes signals, dead-drops, and meetings will be missed. Although you've been waiting all week for this asset to finally make contact, it won't be the end of the world if you miss the first meeting. He may think you've been captured, but a good asset will be resiliant and keep trying. Hopefully he gets the right symbol the next time.",
+            '','','','','','',
+            "You remind yourself that if an asset is sloppy enough to use the wrong symbol they'll also be sloppy enough to get caught. So either they are about going to slip up one day and get themselves and possibly yourself caught or they've already been caught and compromised.",
+            '','','','','','',
+            "Either way, you're not going to take any chances. If this is a trap, they could show up at any minute. So you decide to act as if you've been compromised. You pack up all your espionage equipment, documents, and quietly slip out by jumping over the back wall. You disspear into the night."
+        ],
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "16",
+            },
+            b:  null,
+        }
+    },
+    "15b" :{
+        chapter: '15b',
+        music: 'Echoes_of_Time',
+        textArray: [
+            '','','','','','',
+            "You lay in bed debating what to do. You have waited too long for this. You don't know how long it will be before you receive another signal. Without this asset, you cannot accomplish much and your mission will likely come to abrupt end.",
+            '','','','','','',
+            "The next morning, you show up early to the meeting place, a quiet street near a empty construction site. You aren't being tailed and don't notice much surveillance.",
+            '','','','','','',
+            "A taxi approaches and a man gets out and walks over to you with a large smile. He is wearing an immaculate black robe, a prayer cap, and sporting a long beard. Either your asset is posing as a deeply religious man or your standing face-to-face with someone from the religious police, the defacto intelligence service of ISIS. Realizing that this and the symbol couldn't be a coincidence, you walk past the man, pretending to not even notice him.",
+            '','','','','','',
+            "You hope he mistakes you for a passerby but to your horror he calls out after you. You break into a sprint but a block down, armed men start appearing from what seems like every nook and cranny. This was all a setup. The asset must have been compromised. You are arrested and taking to jail.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Back',
+                goToChapter: "15",
+            },
+            b: {
+                buttonText: 'Continue',
+                goToChapter: "prison", 
+            }
+        }
+    },
+    "16" :{
+        chapter: '16',
+        music: 'Echoes_of_Time',
+        textArray: [
+            '','','','','','',
+            "You return the next morning an after the supposed meeting time. You spent the night at a cheap hotel that didn't ask too many questions. As you approach the corner opposite your secret apartment, you stop dead in your tracks, your face goes pale...",
+            '','','','','','',
+            '','','','','','',
+            "Right in front of your apartment building is a pickup truck with two militants standing guard. You watch from across the street as four men with guns run up the exterior staircase to your unit and kick in the door. You stare in disbelief as you watch your safehouse get raided. Had they arrived an hour later, you would have captured.",
+            '','','','','','',
+            "As a crowd starts to gather your mind is racing. No one is supposed to know the location of the safehouse. The only ones that know are HQ and the local asset. Sure, leaks have been known to occur at HQ over the years, but ISIS would not have the presence or capability to plant a mole. Typically that was reserved for powerful state actors.",
+            '','','','','','',
+            "The only other source that knew of your location was the asset. He could have been compromised. If he had been captured, beaten, and tortured, it's possibly that he could have given up your location and the symbol to use to signal a meeting. That would also explain why he hadn't made contact yet, he was likely being tortured. That would also explain why the incorrect symbol had been used, he probably hadn't specificed it had to be uppercase when he told them everything else.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "16a",
+            },
+            b: null,
+        }
+    },
+    "16a" :{
+        chapter: '16a',
+        music: 'Echoes_of_Time',
+        textArray: [
+            '','','','','','',
+            "Knowing there isn't anything you can do now, you fall back and disappear amongst the crowd. ",
+            '','','','','','',
+            "No sense in stressing over what's done. Your training has thought you to move on and act quickly in the face of catatrophe. You need to figure out where you will stay now. Unfrotunately hotels won't work as the workers often report on the comings and goings of guests to the authorities.",
+            '','','','','','',
+            "You don't know if you can trust him but after narrowly escaping capture, you have few choices aside from accepting the offter to rent a room from the cafe owner you met yesterday.",
+            '','','','','','',
+        ],
+        options:{
+            a: {
+                buttonText: 'Continue',
+                goToChapter: "17",
             },
             b: null,
         }
