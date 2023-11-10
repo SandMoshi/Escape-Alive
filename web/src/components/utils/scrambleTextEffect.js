@@ -1,4 +1,4 @@
-const scrambleText = (el, text) => {
+const scrambleText = (el, text, startCB, endCB) => {
   let chars = "!<>-_\\/[]{}—=+*^?#________";
   let resolvePromise;
   let frameRequest;
@@ -10,6 +10,7 @@ const scrambleText = (el, text) => {
     const length = Math.max(oldText.length, newText.length);
     const promise = new Promise((resolve) => (resolvePromise = resolve));
     queue = [];
+    startCB && startCB();
     for (let i = 0; i < length; i++) {
       const from = oldText[i] || "";
       const to = newText[i] || "";
@@ -43,6 +44,7 @@ const scrambleText = (el, text) => {
     el.innerHTML = output;
     if (complete === queue.length) {
       resolvePromise();
+      endCB && endCB();
     } else {
       frameRequest = requestAnimationFrame(update);
       frame++;

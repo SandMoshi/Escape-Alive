@@ -4,29 +4,10 @@ import story from "../../assets/story/story";
 import propTypes from "prop-types";
 import { Howl } from "howler";
 import { scrambleText } from "../utils/scrambleTextEffect";
-
-// MUSIC
-import Angel_of_Mercy from "../../assets/music/Angel_of_Mercy.mp3";
-import Faceoff from "../../assets/music/Faceoff.mp3";
-import Arcade from "../../assets/music/Arcade.mp3";
-import Choose_Your_Path from "../../assets/music/Choose_Your_Path.mp3";
-import Dark_Times from "../../assets/music/Dark_Times.mp3";
-import Echoes_of_Time_v2 from "../../assets/music/Echoes_of_Time_v2.mp3";
-import Echoes_of_Time from "../../assets/music/Echoes_of_Time.mp3";
-import Plato_s_Cave from "../../assets/music/Plato_s_Cave.mp3";
-import The_Deal_is_Going_Down from "../../assets/music/The_Deal_is_Going_Down.mp3";
-
-// SFX
-import sos_mayday from "../../assets/sfx/morse/mp3/daytripper-sos-mayday.mp3";
-import stations from "../../assets/sfx/morse/mp3/kwahmah-stations-broadcasting_noise-reduced.mp3";
-import wps30 from "../../assets/sfx/morse/mp3/morse-30wps.mp3";
-import telecom from "../../assets/sfx/morse/mp3/timbre_telecom_heavily_edited.mp3";
-import transmission from "../../assets/sfx/morse/mp3/trebblofang__creepy_background_transmission.mp3";
-import pi from "../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3";
+import { AvailableSFX, AvailableSongs } from "../../constants";
 
 export default function MainMenu(props) {
   const [text, setText] = useState([]);
-  const [morseSFX, setMorseSFX] = useState(null);
   const [SFXon, setSFXon] = useState(false);
   const descriptionRef = useRef(null);
   const promptRef = useRef(null);
@@ -51,38 +32,75 @@ export default function MainMenu(props) {
     };
   }, []);
 
+  const morseSFX = useRef(null);
+  const scrambleSFX = useRef(null);
+  const glitchSFX = useRef(null);
+
+  const setupSFX = () => {
+    //Load SFX
+    let SFXfile1 = AvailableSFX["pi"];
+    let SFXfile2 = AvailableSFX["cipherMachine"];
+    let glitchFile = AvailableSFX["digitalGlitches"];
+    morseSFX.current = new Howl({
+      src: [SFXfile1],
+      volume: 0.25,
+      loop: true,
+      preload: true,
+      onloaderror: (err) => {
+        console.error(`music load error:${err}`);
+      },
+      onload: function () {
+        console.log("morseSFX ready");
+      },
+      onplayerror: (err) => {
+        console.log(err);
+      },
+    });
+
+    scrambleSFX.current = new Howl({
+      src: [SFXfile2],
+      volume: 0.25,
+      loop: true,
+      preload: true,
+      onloaderror: (err) => {
+        console.error(`music load error:${err}`);
+      },
+      onload: function () {
+        console.log("scrambleSFX ready");
+      },
+      onplayerror: (err) => {
+        console.log(err);
+      },
+    });
+
+    glitchSFX.current = new Howl({
+      src: [glitchFile],
+      volume: 0.25,
+      loop: true,
+      preload: true,
+      onloaderror: (err) => {
+        console.error(`music load error:${err}`);
+      },
+      onload: function () {
+        console.log("glitchSFX ready");
+      },
+      onplayerror: (err) => {
+        console.log(err);
+      },
+    });
+  };
+
   useEffect(() => {
-    if (!morseSFX) {
-      console.log("morseSFX:", morseSFX);
+    if (!morseSFX.current) {
+      console.log("morseSFX:", morseSFX.current);
       return;
     }
     if (SFXon === true) {
-      morseSFX.play();
+      morseSFX.current.play();
     } else {
-      morseSFX.stop();
+      morseSFX.current.stop();
     }
   }, [SFXon]);
-
-  let Music = {
-    Angel_of_Mercy: Angel_of_Mercy,
-    Faceoff: Faceoff,
-    Arcade: Arcade,
-    Choose_Your_Path: Choose_Your_Path,
-    Dark_Times: Dark_Times,
-    Echoes_of_Time: Echoes_of_Time,
-    Echoes_of_Time_v2: Echoes_of_Time_v2,
-    Plato_s_Cave: Plato_s_Cave,
-    The_Deal_is_Going_Down: The_Deal_is_Going_Down,
-  };
-
-  let SFX = {
-    sos_mayday: sos_mayday,
-    stations: stations,
-    wps30: wps30,
-    telecom: telecom,
-    transmission: transmission,
-    pi: pi,
-  };
 
   // Functions
   var iSpeed = 100; // time delay of print out
@@ -90,9 +108,9 @@ export default function MainMenu(props) {
   var iArrLength = textArray[0].length; // the length of the text array
   var iScrollAt = 20; // start scrolling up at this many lines
 
-  var iTextPos = 0; // initialise text position
-  var sContents = ""; // initialise contents variable
-  var iRow; // initialise current row
+  var iTextPos = 0; // initialize text position
+  var sContents = ""; // initialize contents variable
+  var iRow; // initialize current row
 
   const typewriter = (textArray) => {
     if (!isMounted) {
@@ -116,7 +134,7 @@ export default function MainMenu(props) {
       return [...text];
     });
 
-    if (iTextPos++ == iArrLength) {
+    if (iTextPos++ === iArrLength) {
       iTextPos = 0;
       iIndex++;
       if (iIndex != textArray.length) {
@@ -166,7 +184,7 @@ export default function MainMenu(props) {
   };
 
   const playBackgroundMusic = () => {
-    let song = Music[story[0].music];
+    let song = AvailableSongs[story[0].music];
     let bgMusic = new Howl({
       src: [song],
       volume: 0.25,
@@ -175,7 +193,7 @@ export default function MainMenu(props) {
         console.error(`music load error:${err}`);
       },
       onload: function () {
-        console.log("start");
+        console.log("background music loaded");
       },
       onplayerror: (err) => {
         console.log(err);
@@ -183,28 +201,6 @@ export default function MainMenu(props) {
     });
     bgMusic.play();
     return bgMusic;
-  };
-
-  const setupSFX = () => {
-    //Load SFX
-    let SFXfile = SFX["pi"];
-    let morseSFX = new Howl({
-      src: [SFXfile],
-      volume: 0.25,
-      loop: true,
-      preload: true,
-      onloaderror: (err) => {
-        console.error(`music load error:${err}`);
-      },
-      onload: function () {
-        console.log("start");
-      },
-      onplayerror: (err) => {
-        console.log(err);
-      },
-    });
-    setMorseSFX(morseSFX);
-    return morseSFX;
   };
 
   //Render Functions
@@ -217,7 +213,12 @@ export default function MainMenu(props) {
     let intervalID;
     const timeoutID = setTimeout(() => {
       intervalID = setInterval(() => {
-        scrambleText(descriptionRef.current, textArray[0]);
+        scrambleText(
+          descriptionRef.current,
+          textArray[0],
+          () => glitchSFX.current.play(),
+          () => glitchSFX.current.stop()
+        );
       }, 5000);
     }, 500);
 
@@ -233,9 +234,19 @@ export default function MainMenu(props) {
     if (!promptAnimationComplete.current) {
       setTimeout(() => {
         console.log(lines);
-        scrambleText(promptRef.current, textArray[2]);
+        scrambleText(
+          promptRef.current,
+          textArray[2],
+          () => scrambleSFX.current.play(),
+          () => scrambleSFX.current.stop()
+        );
         setTimeout(() => {
-          scrambleText(promptRef.current, textArray[3]);
+          scrambleText(
+            promptRef.current,
+            textArray[3],
+            () => scrambleSFX.current.play(),
+            () => scrambleSFX.current.stop()
+          );
         }, 5000);
       }, 10000);
     }
