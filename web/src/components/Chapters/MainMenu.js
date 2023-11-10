@@ -12,10 +12,10 @@ export default function MainMenu(props) {
   const descriptionRef = useRef(null);
   const promptRef = useRef(null);
   var textArray = story[0].textArray;
-  var isMounted = false;
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    isMounted = true;
+    isMounted.current = true;
     let SFX = setupSFX();
     //Play bg music
     let bgMusic = null;
@@ -26,7 +26,7 @@ export default function MainMenu(props) {
 
     //Unmounting
     return () => {
-      isMounted = false;
+      isMounted.current = false;
       SFX.stop();
       bgMusic.stop();
     };
@@ -113,7 +113,7 @@ export default function MainMenu(props) {
   var iRow; // initialize current row
 
   const typewriter = (textArray) => {
-    if (!isMounted) {
+    if (!isMounted.current) {
       return;
     }
     setSFXon(true);
@@ -137,7 +137,7 @@ export default function MainMenu(props) {
     if (iTextPos++ === iArrLength) {
       iTextPos = 0;
       iIndex++;
-      if (iIndex != textArray.length) {
+      if (iIndex !== textArray.length) {
         setSFXon(false);
         setTimeout(() => {
           //Clear carat from previous line
@@ -211,16 +211,22 @@ export default function MainMenu(props) {
   // Animate Description Text
   useEffect(() => {
     let intervalID;
+    const scramble = (firstTime) => {
+      scrambleText(
+        descriptionRef.current,
+        textArray[0],
+        () =>
+          firstTime ? scrambleSFX.current.play() : glitchSFX.current.play(),
+        () =>
+          firstTime ? scrambleSFX.current.stop() : glitchSFX.current.stop()
+      );
+    };
     const timeoutID = setTimeout(() => {
+      scramble("firstTime");
       intervalID = setInterval(() => {
-        scrambleText(
-          descriptionRef.current,
-          textArray[0],
-          () => glitchSFX.current.play(),
-          () => glitchSFX.current.stop()
-        );
-      }, 5000);
-    }, 500);
+        scramble();
+      }, 10000);
+    }, 3000);
 
     return () => {
       clearInterval(intervalID);
