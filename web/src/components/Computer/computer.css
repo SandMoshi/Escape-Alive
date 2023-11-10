@@ -51,6 +51,7 @@ div.computer > * {
   text-align: left;
   margin: auto;
   width: 410px;
+  text-align: center;
 }
 
 div.rotatePrompt {
@@ -86,6 +87,6 @@ img.rotateIcon {
   }
 
   .menuText {
-    width: 205px;
+    width: 300px;
   }
 }

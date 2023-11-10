@@ -3,6 +3,9 @@ const story = {
     chapter: 0,
     music: "Echoes_of_Time",
     textArray: [
+      "A story driven visual novel adventure.",
+      "☷☐☶☶☵☶☷☱☶☷☶☐☶☵",
+      "DECRYPTING MESSAGE >>>",
       "☶⋀☷☱☶ Are you ready? ☷☶☐☶☵",
       "Please make your selection below",
     ],
