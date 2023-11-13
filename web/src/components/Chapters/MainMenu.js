@@ -1,40 +1,45 @@
-import React, { useState, useEffect, useRef } from "react";
+// VENDOR imports
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from "react";
+
+// imports
 import textLogo from "../../assets/ascii/logo";
 import story from "../../assets/story/story";
 import propTypes from "prop-types";
 import { Howl } from "howler";
 import { scrambleText } from "../utils/scrambleTextEffect";
 import { AvailableSFX, AvailableSongs } from "../../constants";
+import TabContext from "../../stores/Tab/TabContext.ts";
+import { playSounds, stopSounds } from "../utils/audioHelpers.ts";
 
 export default function MainMenu(props) {
+  const { isTabActive } = useContext(TabContext);
   const [text, setText] = useState([]);
-  const [SFXon, setSFXon] = useState(false);
+  const [morseSFXon, setmorseSFXon] = useState(false);
   const descriptionRef = useRef(null);
   const promptRef = useRef(null);
-  var textArray = story[0].textArray;
   const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-    let SFX = setupSFX();
-    //Play bg music
-    let bgMusic = null;
-    if (story[0].music) {
-      bgMusic = playBackgroundMusic();
-    }
-    typewriter(textArray);
-
-    //Unmounting
-    return () => {
-      isMounted.current = false;
-      SFX.stop();
-      bgMusic.stop();
-    };
-  }, []);
-
+  const bgMusic = useRef(null);
   const morseSFX = useRef(null);
   const scrambleSFX = useRef(null);
   const glitchSFX = useRef(null);
+  const SFXList = useRef([]);
+
+  var textArray = story[0].textArray;
+
+  // Mount/Unmount logic
+  useEffect(() => {
+    setupSFX();
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const setupSFX = () => {
     //Load SFX
@@ -56,6 +61,7 @@ export default function MainMenu(props) {
         console.log(err);
       },
     });
+    SFXList.current = [...SFXList.current, morseSFX.current];
 
     scrambleSFX.current = new Howl({
       src: [SFXfile2],
@@ -72,6 +78,7 @@ export default function MainMenu(props) {
         console.log(err);
       },
     });
+    SFXList.current = [...SFXList.current, scrambleSFX.current];
 
     glitchSFX.current = new Howl({
       src: [glitchFile],
@@ -88,19 +95,18 @@ export default function MainMenu(props) {
         console.log(err);
       },
     });
+    SFXList.current = [...SFXList.current, glitchSFX.current];
   };
 
+  // Pause when browser tab loses focus
   useEffect(() => {
-    if (!morseSFX.current) {
-      console.log("morseSFX:", morseSFX.current);
-      return;
-    }
-    if (SFXon === true) {
-      morseSFX.current.play();
+    if (isTabActive === false) {
+      bgMusic.current && bgMusic.current.pause();
+      stopSounds(SFXList.current);
     } else {
-      morseSFX.current.stop();
+      bgMusic.current && !bgMusic.current.playing() && bgMusic.current.play();
     }
-  }, [SFXon]);
+  }, [isTabActive]);
 
   // Functions
   var iSpeed = 100; // time delay of print out
@@ -116,7 +122,7 @@ export default function MainMenu(props) {
     if (!isMounted.current) {
       return;
     }
-    setSFXon(true);
+    setmorseSFXon(true);
     sContents = [""];
     iRow = Math.max(0, iIndex - iScrollAt);
 
@@ -138,7 +144,7 @@ export default function MainMenu(props) {
       iTextPos = 0;
       iIndex++;
       if (iIndex !== textArray.length) {
-        setSFXon(false);
+        setmorseSFXon(false);
         setTimeout(() => {
           //Clear carat from previous line
           setText((text) => {
@@ -172,7 +178,7 @@ export default function MainMenu(props) {
           return [...text];
         });
         //Stop SFX
-        setSFXon(false);
+        setmorseSFXon(false);
         //Show the buttons after a delay
         setTimeout(() => {
           props.toggleButtons(true);
@@ -207,6 +213,19 @@ export default function MainMenu(props) {
   let lines = text.map((line, index) => {
     return line;
   });
+
+  // typewriter sound effects
+  useEffect(() => {
+    if (!morseSFX.current) {
+      console.log("morseSFX:", morseSFX.current);
+      return;
+    }
+    if (morseSFXon === true) {
+      morseSFX.current.play();
+    } else {
+      morseSFX.current.stop();
+    }
+  }, [morseSFXon]);
 
   // Animate Description Text
   useEffect(() => {
@@ -258,6 +277,25 @@ export default function MainMenu(props) {
     }
     promptAnimationComplete.current = true;
   }, [textArray, lines, promptAnimationComplete]);
+
+  useEffect(() => {
+    // Play bg music
+    if (story[0].music) {
+      bgMusic.current = playBackgroundMusic();
+    }
+    // Start text animation
+    typewriter(textArray);
+
+    return () => {
+      //On Unmount
+      if (isMounted.current === false) {
+        stopSounds();
+        bgMusic.current.stop();
+      }
+    };
+    // Run once on mount/unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <React.Fragment>

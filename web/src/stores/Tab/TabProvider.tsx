@@ -14,15 +14,12 @@ const TabProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   const handleVisibilityChange = (blur: boolean | void): void => {
-    console.log("change detected");
     if (document.hidden || blur) {
       setTabActive(false);
     } else {
       setTabActive(true);
     }
   };
-
-  console.warn("SAND A");
 
   useEffect(() => {
     document.addEventListener("visibilitychange", () => handleVisibilityChange);
