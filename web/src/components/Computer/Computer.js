@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./computer.css";
+// Vendor imports
+import React, { useState, useEffect, useRef, useContext } from "react";
+
+// imports
 import bg_1 from "../../assets/bg/Background_1.png";
 import Screen from "../Screen/Screen";
 import ButtonGroup from "../ButtonGroup/ButtonGroup";
 import rotatePhoneIcon from "../../assets/icons/phone-position-rotation-from-horizontal-to-vertical.svg";
+
+// style imports
+import "./computer.css";
 
 export default function Computer(props) {
   const [chapter, setChapter] = useState("0");
