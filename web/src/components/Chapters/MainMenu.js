@@ -227,19 +227,32 @@ export default function MainMenu(props) {
     }
   }, [morseSFXon]);
 
-  // Animate Description Text
-  useEffect(() => {
-    let intervalID;
-    const scramble = (firstTime) => {
+  // Scramble text effect
+  const scramble = useCallback(
+    (firstTime) => {
       scrambleText(
         descriptionRef.current,
         textArray[0],
         () =>
-          firstTime ? scrambleSFX.current.play() : glitchSFX.current.play(),
+          isTabActive
+            ? firstTime
+              ? scrambleSFX.current.play()
+              : glitchSFX.current.play()
+            : null,
         () =>
-          firstTime ? scrambleSFX.current.stop() : glitchSFX.current.stop()
+          isTabActive
+            ? firstTime
+              ? scrambleSFX.current.stop()
+              : glitchSFX.current.stop()
+            : null
       );
-    };
+    },
+    [isTabActive, textArray]
+  );
+
+  // Animate Description Text
+  useEffect(() => {
+    let intervalID;
     const timeoutID = setTimeout(() => {
       scramble("firstTime");
       intervalID = setInterval(() => {
@@ -251,7 +264,7 @@ export default function MainMenu(props) {
       clearInterval(intervalID);
       clearTimeout(timeoutID);
     };
-  }, [textArray]);
+  }, [textArray, isTabActive, scramble]);
 
   // Animate prompt text
   let promptAnimationComplete = useRef(false);
