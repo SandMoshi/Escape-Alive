@@ -9,26 +9,33 @@ import React, {
 
 // imports
 import textLogo from "../../assets/ascii/logo";
-import story from "../../assets/story/story";
+import story from "../../assets/story/story.ts";
 import propTypes from "prop-types";
 import { Howl } from "howler";
-import { scrambleText } from "../utils/scrambleTextEffect";
-import { AvailableSFX, AvailableSongs } from "../../constants";
+import { scrambleText } from "../utils/scrambleTextEffect.ts";
+import { AvailableSFX, AvailableSongs } from "../../constants.ts";
 import TabContext from "../../stores/Tab/TabContext.ts";
-import { playSounds, stopSounds } from "../utils/audioHelpers.ts";
+import { stopSounds } from "../utils/audioHelpers.ts";
 
-export default function MainMenu(props) {
+// type imports
+import type { HowlSound } from "../utils/audioHelpers.ts";
+
+type MainMenuPropTypes = {
+  toggleButtons: (arg: boolean) => void;
+};
+
+export default function MainMenu(props: MainMenuPropTypes) {
   const { isTabActive } = useContext(TabContext);
-  const [text, setText] = useState([]);
-  const [morseSFXon, setmorseSFXon] = useState(false);
+  const [text, setText] = useState<Array<string>>([]);
+  const [morseSFXon, setMorseSFXon] = useState(false);
   const descriptionRef = useRef(null);
   const promptRef = useRef(null);
   const isMounted = useRef(false);
-  const bgMusic = useRef(null);
-  const morseSFX = useRef(null);
-  const scrambleSFX = useRef(null);
-  const glitchSFX = useRef(null);
-  const SFXList = useRef([]);
+  const bgMusic = useRef<HowlSound | null>(null);
+  const morseSFX = useRef<HowlSound | null>(null);
+  const scrambleSFX = useRef<HowlSound | null>(null);
+  const glitchSFX = useRef<HowlSound | null>(null);
+  const SFXList = useRef<Array<HowlSound | null>>([]);
 
   var textArray = story[0].textArray;
 
@@ -111,18 +118,18 @@ export default function MainMenu(props) {
   // Functions
   var iSpeed = 100; // time delay of print out
   var iIndex = 0; // start printing array at this posision
-  var iArrLength = textArray[0].length; // the length of the text array
+  var iArrLength = textArray ? textArray[0].length : undefined; // the length of the text array
   var iScrollAt = 20; // start scrolling up at this many lines
 
   var iTextPos = 0; // initialize text position
-  var sContents = ""; // initialize contents variable
+  var sContents = [""]; // initialize contents variable
   var iRow; // initialize current row
 
-  const typewriter = (textArray) => {
+  const typewriter = (textArray: Array<string>) => {
     if (!isMounted.current) {
       return;
     }
-    setmorseSFXon(true);
+    setMorseSFXon(true);
     sContents = [""];
     iRow = Math.max(0, iIndex - iScrollAt);
 
@@ -130,7 +137,9 @@ export default function MainMenu(props) {
       sContents[iIndex] += textArray[iRow++];
       sContents[iIndex] = "";
     }
-    setText((text) => {
+
+    // @ts-ignore
+    setText((text: Array<React.ReactNode>) => {
       text[iIndex] = (
         <p key={`line-${iIndex}`}>
           {sContents[iIndex] + textArray[iIndex].substring(0, iTextPos)}
@@ -144,10 +153,11 @@ export default function MainMenu(props) {
       iTextPos = 0;
       iIndex++;
       if (iIndex !== textArray.length) {
-        setmorseSFXon(false);
+        setMorseSFXon(false);
         setTimeout(() => {
           //Clear carat from previous line
-          setText((text) => {
+          // @ts-ignore
+          setText((text: Array<React.ReactNode>) => {
             text[iIndex - 1] = (
               <p key={`line-${iIndex - 1}`}>
                 {sContents[iIndex - 1] +
@@ -167,7 +177,8 @@ export default function MainMenu(props) {
         }, 1500);
       } else {
         //Make last line carat blink
-        setText((text) => {
+        // @ts-ignore
+        setText((text: Array<React.ReactNode>) => {
           text[iIndex - 1] = (
             <p key={`line-${iIndex - 1}`}>
               {sContents[iIndex - 1] +
@@ -178,7 +189,7 @@ export default function MainMenu(props) {
           return [...text];
         });
         //Stop SFX
-        setmorseSFXon(false);
+        setMorseSFXon(false);
         //Show the buttons after a delay
         setTimeout(() => {
           props.toggleButtons(true);
@@ -190,7 +201,7 @@ export default function MainMenu(props) {
   };
 
   const playBackgroundMusic = () => {
-    let song = AvailableSongs[story[0].music];
+    let song = story[0].music && AvailableSongs[story[0].music];
     let bgMusic = new Howl({
       src: [song],
       volume: 0.25,
@@ -229,21 +240,21 @@ export default function MainMenu(props) {
 
   // Scramble text effect
   const scramble = useCallback(
-    (firstTime) => {
+    (firstTime?: boolean | string) => {
       scrambleText(
         descriptionRef.current,
-        textArray[0],
+        textArray && textArray[0],
         () =>
           isTabActive
             ? firstTime
-              ? scrambleSFX.current.play()
-              : glitchSFX.current.play()
+              ? scrambleSFX.current && scrambleSFX.current.play()
+              : glitchSFX.current && glitchSFX.current.play()
             : null,
         () =>
           isTabActive
             ? firstTime
-              ? scrambleSFX.current.stop()
-              : glitchSFX.current.stop()
+              ? scrambleSFX.current && scrambleSFX.current.stop()
+              : glitchSFX.current && glitchSFX.current.stop()
             : null
       );
     },
@@ -252,7 +263,7 @@ export default function MainMenu(props) {
 
   // Animate Description Text
   useEffect(() => {
-    let intervalID;
+    let intervalID: NodeJS.Timeout;
     const timeoutID = setTimeout(() => {
       scramble("firstTime");
       intervalID = setInterval(() => {
@@ -274,16 +285,16 @@ export default function MainMenu(props) {
         console.log(lines);
         scrambleText(
           promptRef.current,
-          textArray[2],
-          () => scrambleSFX.current.play(),
-          () => scrambleSFX.current.stop()
+          textArray && textArray[2],
+          () => scrambleSFX.current?.play(),
+          () => scrambleSFX.current?.stop()
         );
         setTimeout(() => {
           scrambleText(
             promptRef.current,
-            textArray[3],
-            () => scrambleSFX.current.play(),
-            () => scrambleSFX.current.stop()
+            textArray && textArray[3],
+            () => scrambleSFX.current?.play(),
+            () => scrambleSFX.current?.stop()
           );
         }, 5000);
       }, 10000);
@@ -297,13 +308,13 @@ export default function MainMenu(props) {
       bgMusic.current = playBackgroundMusic();
     }
     // Start text animation
-    typewriter(textArray);
+    textArray && typewriter(textArray);
 
     return () => {
       //On Unmount
       if (isMounted.current === false) {
-        stopSounds();
-        bgMusic.current.stop();
+        stopSounds(SFXList.current);
+        bgMusic.current && bgMusic.current.stop();
       }
     };
     // Run once on mount/unmount

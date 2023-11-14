@@ -1,4 +1,20 @@
-const story = {
+type Story = {
+  [chapter: string]: {
+    chapter: number | string;
+    music?: string;
+    imagePath?: string;
+    imageFontSize?: string;
+    textArray: Array<string> | null;
+    options: {
+      [letter: string]: {
+        buttonText: string;
+        goToChapter: string;
+      } | null;
+    };
+  };
+};
+
+const story: Story = {
   0: {
     chapter: 0,
     music: "Echoes_of_Time",

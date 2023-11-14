@@ -1,11 +1,22 @@
-const scrambleText = (el, text, startCB, endCB) => {
-  let chars = "!<>-_\\/[]{}—=+*^?#________";
-  let resolvePromise;
-  let frameRequest;
-  let frame;
-  let queue = [];
+const scrambleText = (
+  el: HTMLElement | null,
+  text: string | null,
+  startCB: Function,
+  endCB: Function
+) => {
+  if (el == null || text == null) {
+    return;
+  }
 
-  const setText = (newText) => {
+  let chars = "!<>-_\\/[]{}—=+*^?#________";
+  let resolvePromise: (value?: unknown) => void;
+  let frameRequest: number;
+  let frame: number;
+  let queue: { from: any; to: any; start: number; end: number; char?: any }[] =
+    [];
+
+  const setText = (newText: string) => {
+    // @ts-ignore
     const oldText = el.innerText;
     const length = Math.max(oldText.length, newText.length);
     const promise = new Promise((resolve) => (resolvePromise = resolve));

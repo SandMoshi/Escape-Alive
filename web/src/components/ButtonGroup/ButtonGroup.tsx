@@ -5,8 +5,7 @@ import propTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 
 // imports
-// @ts-ignore
-import story from "../../assets/story/story.js";
+import story from "../../assets/story/story";
 import Button from "./Button";
 
 // style imports
@@ -15,11 +14,11 @@ import "../utils/glitchTextEffect.css";
 
 type ButtonGroupPropTypes = {
   setChapter: Function;
-  chapter: Number | String;
-  toggleButtons: (arg: Boolean) => void;
+  chapter: number | string;
+  toggleButtons: (arg: boolean) => void;
   toggleSkip: Function;
-  skip: Boolean;
-  showButtons: Boolean;
+  skip: boolean;
+  showButtons: boolean;
 };
 
 function ButtonGroup(props: ButtonGroupPropTypes) {
@@ -43,21 +42,21 @@ function ButtonGroup(props: ButtonGroupPropTypes) {
         <div className="btngroup">
           {story[props.chapter].options.a && (
             <Button
-              to={story[props.chapter].options.a.goToChapter}
+              to={story[props.chapter]?.options.a?.goToChapter}
               toggleButtons={props.toggleButtons}
               setChapter={props.setChapter}
             >
-              {story[props.chapter].options.a.buttonText}
+              {story[props.chapter].options.a?.buttonText}
             </Button>
           )}
 
           {story[props.chapter].options.b && (
             <Button
-              to={story[props.chapter].options.b.goToChapter}
+              to={story[props.chapter].options.b?.goToChapter}
               toggleButtons={props.toggleButtons}
               setChapter={props.setChapter}
             >
-              {story[props.chapter].options.b.buttonText}
+              {story[props.chapter].options.b?.buttonText}
             </Button>
           )}
         </div>

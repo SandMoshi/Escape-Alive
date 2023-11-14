@@ -138,17 +138,17 @@ type HowlSound = {
   pannerAttr(options: {}, id?: number): void;
 };
 
-const playSounds = (list: Array<HowlSound>) => {
+const playSounds = (list: Array<HowlSound | null>) => {
   list.forEach((item) => {
     item && item.play();
   });
 };
-const pauseSounds = (list: Array<HowlSound>) => {
+const pauseSounds = (list: Array<HowlSound | null>) => {
   list.forEach((item) => {
     item && item.pause();
   });
 };
-const stopSounds = (list: Array<HowlSound>) => {
+const stopSounds = (list: Array<HowlSound | null>) => {
   list.forEach((item) => {
     item && item.stop();
   });
@@ -159,5 +159,6 @@ export type {
   HowlCallback,
   SpatialOrientation,
   SpatialPosition,
+  HowlSound,
 };
 export { playSounds, pauseSounds, stopSounds };

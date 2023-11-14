@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 
 type ButtonPropTypes = {
-  toggleButtons: (arg: Boolean) => void;
-  to: String;
+  toggleButtons: (arg: boolean) => void;
+  to: string | void;
   children: React.ReactNode;
   setChapter: Function;
 };
@@ -11,7 +11,7 @@ type ButtonPropTypes = {
 function Button(props: ButtonPropTypes) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  const goToChapter = (to: String) => {
+  const goToChapter = (to: string | void) => {
     props.setChapter(to);
   };
 

@@ -1,5 +1,4 @@
-const textLogo = 
-`EEEEEEEEEEEEEEEEEEEEEE   SSSSSSSSSSSSSSS         CCCCCCCCCCCCC               AAA               PPPPPPPPPPPPPPPPP   EEEEEEEEEEEEEEEEEEEEEE        IIIIIIIIII   SSSSSSSSSSSSSSS IIIIIIIIII   SSSSSSSSSSSSSSS 
+const textLogo: string = `EEEEEEEEEEEEEEEEEEEEEE   SSSSSSSSSSSSSSS         CCCCCCCCCCCCC               AAA               PPPPPPPPPPPPPPPPP   EEEEEEEEEEEEEEEEEEEEEE        IIIIIIIIII   SSSSSSSSSSSSSSS IIIIIIIIII   SSSSSSSSSSSSSSS 
 E::::::::::::::::::::E SS:::::::::::::::S     CCC::::::::::::C              A:::A              P::::::::::::::::P  E::::::::::::::::::::E        I::::::::I SS:::::::::::::::SI::::::::I SS:::::::::::::::S
 E::::::::::::::::::::ES:::::SSSSSS::::::S   CC:::::::::::::::C             A:::::A             P::::::PPPPPP:::::P E::::::::::::::::::::E        I::::::::IS:::::SSSSSS::::::SI::::::::IS:::::SSSSSS::::::S
 EE::::::EEEEEEEEE::::ES:::::S     SSSSSSS  C:::::CCCCCCCC::::C            A:::::::A            PP:::::P     P:::::PEE::::::EEEEEEEEE::::E        II::::::IIS:::::S     SSSSSSSII::::::IIS:::::S     SSSSSSS
@@ -14,6 +13,6 @@ E:::::E       EEEEEE            S:::::S C:::::C       CCCCCC      A:::::AAAAAAAA
 EE::::::EEEEEEEE:::::ESSSSSSS     S:::::S  C:::::CCCCCCCC::::C   A:::::A             A:::::A   PP::::::PP          EE::::::EEEEEEEE:::::E        II::::::IISSSSSSS     S:::::SII::::::IISSSSSSS     S:::::S
 E::::::::::::::::::::ES::::::SSSSSS:::::S   CC:::::::::::::::C  A:::::A               A:::::A  P::::::::P          E::::::::::::::::::::E        I::::::::IS::::::SSSSSS:::::SI::::::::IS::::::SSSSSS:::::S
 E::::::::::::::::::::ES:::::::::::::::SS      CCC::::::::::::C A:::::A                 A:::::A P::::::::P          E::::::::::::::::::::E        I::::::::IS:::::::::::::::SS I::::::::IS:::::::::::::::SS 
-EEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS           CCCCCCCCCCCCCAAAAAAA                   AAAAAAAPPPPPPPPPP          EEEEEEEEEEEEEEEEEEEEEE        IIIIIIIIII SSSSSSSSSSSSSSS   IIIIIIIIII SSSSSSSSSSSSSSS`  
+EEEEEEEEEEEEEEEEEEEEEE SSSSSSSSSSSSSSS           CCCCCCCCCCCCCAAAAAAA                   AAAAAAAPPPPPPPPPP          EEEEEEEEEEEEEEEEEEEEEE        IIIIIIIIII SSSSSSSSSSSSSSS   IIIIIIIIII SSSSSSSSSSSSSSS`;
 
 export default textLogo;
