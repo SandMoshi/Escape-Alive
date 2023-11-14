@@ -1,0 +1,63 @@
+/* USAGE: 
+
+Each line of text should have `.glitch`
+
+*/
+
+.glitch:not(:first-child) {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.glitch:nth-child(1) {
+  -webkit-animation: glitch1 1000ms -934ms linear infinite;
+  animation: glitch1 1000ms -934ms linear infinite;
+}
+@-webkit-keyframes glitch1 {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(0);
+    color: #6dcf39;
+  }
+  85% {
+    transform: translateX(2px);
+    color: #4e9a26;
+  }
+  90% {
+    transform: translateX(-2px);
+    color: rgb(1, 100, 6);
+  }
+  95% {
+    transform: translateX(1px);
+    color: #6dcf39;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes glitch1 {
+  0% {
+    transform: translateX(0);
+  }
+  80% {
+    transform: translateX(0);
+    color: #6dcf39;
+  }
+  85% {
+    transform: translateX(2px);
+    color: #4e9a26;
+  }
+  90% {
+    transform: translateX(-2px);
+    color: rgb(1, 100, 6);
+  }
+  95% {
+    transform: translateX(1px);
+    color: #6dcf39;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
