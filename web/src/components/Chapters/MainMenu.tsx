@@ -30,7 +30,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
   const [morseSFXon, setMorseSFXon] = useState(false);
   const descriptionRef = useRef(null);
   const promptRef = useRef(null);
-  const isMounted = useRef(false);
+  const setupComplete = useRef(false);
   const bgMusic = useRef<HowlSound | null>(null);
   const morseSFX = useRef<HowlSound | null>(null);
   const scrambleSFX = useRef<HowlSound | null>(null);
@@ -42,9 +42,9 @@ export default function MainMenu(props: MainMenuPropTypes) {
   // Mount/Unmount logic
   useEffect(() => {
     setupSFX();
-    isMounted.current = true;
+    setupComplete.current = true;
     return () => {
-      isMounted.current = false;
+      setupComplete.current = false;
     };
   }, []);
 
@@ -126,7 +126,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
   var iRow; // initialize current row
 
   const typewriter = (textArray: Array<string>) => {
-    if (!isMounted.current) {
+    if (!setupComplete.current) {
       return;
     }
     setMorseSFXon(true);
@@ -312,7 +312,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
 
     return () => {
       //On Unmount
-      if (isMounted.current === false) {
+      if (setupComplete.current === false) {
         stopSounds(SFXList.current);
         bgMusic.current && bgMusic.current.stop();
       }
