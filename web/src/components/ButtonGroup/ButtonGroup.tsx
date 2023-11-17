@@ -1,7 +1,6 @@
 // Vendor imports
 import React from "react";
 import propTypes from "prop-types";
-// @ts-ignore
 import { CSSTransition } from "react-transition-group";
 
 // imports
@@ -22,15 +21,13 @@ type ButtonGroupPropTypes = {
 };
 
 function ButtonGroup(props: ButtonGroupPropTypes) {
-  function Skip() {
-    return (
-      <div className="button" onClick={() => props.toggleSkip()}>
-        Skip
-      </div>
-    );
-  }
+  const SkipButton = () => (
+    <Button onClickOverride={() => props.toggleSkip()}>Skip</Button>
+  );
 
-  // const skipButton = <Button>Skip</Button>;
+  const isMainMenu = Number(props.chapter) === 0;
+
+  // Scenario 1: Show Buttons for the current story
   if (props.showButtons) {
     return (
       <CSSTransition
@@ -62,14 +59,14 @@ function ButtonGroup(props: ButtonGroupPropTypes) {
         </div>
       </CSSTransition>
     );
-  } else if (story[props.chapter].textArray) {
+    // Scenario 2: Show Skip button while text is being animated
+  } else if (story[props.chapter].textArray && !isMainMenu) {
     return (
-      <React.Fragment>
-        <div className="btngroup">
-          {Number(props.chapter) !== 0 ? <Skip /> : null}
-        </div>
-      </React.Fragment>
+      <div className="btngroup">
+        <SkipButton />
+      </div>
     );
+    // Scenario 3: No buttons need to be shown
   } else return null;
 }
 
