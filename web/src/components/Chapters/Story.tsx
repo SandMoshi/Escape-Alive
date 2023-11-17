@@ -1,5 +1,5 @@
 // Vendor imports
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Howl } from "howler";
 import propTypes from "prop-types";
 
@@ -10,31 +10,37 @@ import * as images from "../../assets/ascii/images";
 
 export default function Story(props) {
   const [text, setText] = useState<Array<React.ReactNode | null>>([]);
-  const [morseSFX, setMorseSFX] = useState<Howl | null>(null);
+  const morseSFX = useRef<Howl | null>(null);
+  const jailSFX = useRef<Howl | null>(null);
+  const bgMusic = useRef<Howl | null>(null);
   const [SFXon, setSFXon] = useState(false); //Determines if SFX is on/off
-  const [lastIntervalID, setLastIntervalID] = useState<NodeJS.Timer | null>(
-    null
-  );
+  const lastIntervalID = useRef<NodeJS.Timer | null>(null);
   const [imageContent, setImageContent] = useState<React.ReactNode>(null);
+  const setupComplete = useRef<boolean>(false);
 
   // set up text to print, each item in array is new line
   var textArray = story[props.chapter].textArray;
 
   // Start/Stop SFX
   useEffect(() => {
-    if (!morseSFX) {
-      console.log("morseSFX:", morseSFX);
-      return;
-    }
     if (SFXon && props.chapter === "prison") {
       setSFXon(false);
     }
     if (SFXon === true) {
-      morseSFX.play();
+      morseSFX.current && morseSFX.current.play();
     } else {
-      morseSFX.stop();
+      morseSFX.current && morseSFX.current.stop();
     }
-  }, [SFXon, morseSFX, props.chapter]);
+  }, [SFXon, props.chapter]);
+
+  // On Unmount Only
+  useEffect(() => {
+    console.log("UNMOUNT - STOP ALL SFX");
+    // Stop all Sounds & Music
+    morseSFX.current && morseSFX.current.stop();
+    jailSFX.current && jailSFX.current.stop();
+    bgMusic.current && bgMusic.current.stop();
+  }, []);
 
   const newTypewriter = useCallback(
     (iSpeed?: number) => {
@@ -114,6 +120,30 @@ export default function Story(props) {
     [textArray, props.toggleButtons]
   );
 
+  const playJailSFX = (): void => {
+    if (jailSFX.current) {
+      jailSFX.current.play();
+    } else {
+      // Setup the SFX first
+      jailSFX.current = new Howl({
+        src: [AvailableSFX.jailSFX],
+        volume: 0.5,
+        loop: false,
+        preload: true,
+        onloaderror: (err) => {
+          console.error(`music load error:${err}`);
+        },
+        onload: function () {
+          console.log("start jail");
+        },
+        onplayerror: (err) => {
+          console.log(err);
+        },
+      });
+      jailSFX.current.play();
+    }
+  };
+
   const drawText = useCallback(() => {
     const setSkip = props.setSkip;
     const toggleButtons = props.toggleButtons;
@@ -183,7 +213,7 @@ export default function Story(props) {
 
   const playBackgroundMusic = useCallback(() => {
     let song = AvailableSongs[story[props.chapter].music || ""];
-    let bgMusic = new Howl({
+    bgMusic.current = new Howl({
       src: [song],
       volume: 0.25,
       loop: true,
@@ -197,12 +227,12 @@ export default function Story(props) {
         console.log(err);
       },
     });
-    bgMusic.play();
+    bgMusic.current.play();
     return bgMusic;
   }, [props.chapter]);
 
-  const setupSFX = useCallback(() => {
-    let morseSFX = new Howl({
+  const setupMorseSFX = useCallback(() => {
+    morseSFX.current = new Howl({
       src: [AvailableSFX.pi],
       volume: 0.25,
       loop: true,
@@ -217,35 +247,31 @@ export default function Story(props) {
         console.log(err);
       },
     });
-    setMorseSFX(morseSFX);
-    return morseSFX;
   }, []);
 
   //On Initial Load
   useEffect(() => {
-    console.log("<Story /> Initial Render");
+    if (!setupComplete.current) {
+      console.log("<Story /> Initial Render");
+      setupMorseSFX();
 
-    let morseSFX = setupSFX();
-    //Play bg music
-    let bgMusic: Howl | null = null;
-    if (story[props.chapter].music) {
-      bgMusic = playBackgroundMusic();
-    }
+      // Start Morse SFX
+      SFXon && morseSFX.current && morseSFX.current.play();
 
-    //Unmounting
-    return () => {
-      if (morseSFX) {
-        morseSFX.stop();
+      //Play bg music
+      if (story[props.chapter].music) {
+        playBackgroundMusic();
       }
-      bgMusic && bgMusic.stop();
-    };
-  }, [props.chapter, playBackgroundMusic, setupSFX]);
+      // Prevent use-effect from running again
+      setupComplete.current = true;
+    }
+  }, [props.chapter, playBackgroundMusic, setupMorseSFX, SFXon]);
 
   //New chapter
   useEffect(() => {
     setImageContent(null);
     setText([]); //clear text
-    lastIntervalID && clearInterval(lastIntervalID); //stop any previous typing
+    lastIntervalID.current && clearInterval(lastIntervalID.current); //stop any previous typing
     let jailSFX: Howl | null = null;
     const setSkip = props.setSkip;
     setSkip(false);
@@ -253,26 +279,10 @@ export default function Story(props) {
     if (!story[chapter].textArray && story[chapter].imagePath) {
       drawImage();
     } else {
-      let intervalID = newTypewriter(); //start typing new chapter
-      setLastIntervalID(intervalID); //keep track of this typer
+      lastIntervalID.current = newTypewriter(); //start typing new chapter
     }
     if (chapter === "prison") {
-      jailSFX = new Howl({
-        src: [AvailableSFX.jailSFX],
-        volume: 0.5,
-        loop: false,
-        preload: true,
-        onloaderror: (err) => {
-          console.error(`music load error:${err}`);
-        },
-        onload: function () {
-          console.log("start jail");
-        },
-        onplayerror: (err) => {
-          console.log(err);
-        },
-      });
-      jailSFX.play();
+      playJailSFX();
     }
 
     //Unmounting
@@ -281,7 +291,7 @@ export default function Story(props) {
         jailSFX.stop();
       }
     };
-  }, [props.chapter, props.setSkip, drawImage, lastIntervalID, newTypewriter]);
+  }, [props.chapter, props.setSkip, drawImage, newTypewriter]);
 
   //Listen for Skipping
   useEffect(() => {
@@ -294,9 +304,9 @@ export default function Story(props) {
     ) {
       return;
     }
-    lastIntervalID && clearInterval(lastIntervalID); //stop any previous typing
+    lastIntervalID.current && clearInterval(lastIntervalID.current); //stop any previous typing
     drawText();
-  }, [props.skip, drawText, lastIntervalID, props.chapter]);
+  }, [props.skip, drawText, props.chapter]);
 
   let lines = text.map((line, index) => {
     return line;
