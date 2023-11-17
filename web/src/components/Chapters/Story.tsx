@@ -131,11 +131,9 @@ export default function Story(props) {
         loop: false,
         preload: true,
         onloaderror: (err) => {
-          console.error(`music load error:${err}`);
+          console.error(`jailSFX load error:${err}`);
         },
-        onload: function () {
-          console.log("start jail");
-        },
+        onload: function () {},
         onplayerror: (err) => {
           console.log(err);
         },
@@ -185,7 +183,6 @@ export default function Story(props) {
     setImageContent(image);
     //Display the image after a short delay
     setTimeout(() => {
-      console.log("remove collapsed");
       let image = (
         <pre>
           <p
@@ -295,7 +292,6 @@ export default function Story(props) {
 
   //Listen for Skipping
   useEffect(() => {
-    console.log("skip", props.skip);
     if (props.skip !== true) {
       return;
     } else if (
