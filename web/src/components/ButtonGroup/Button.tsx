@@ -27,7 +27,9 @@ function Button(props: ButtonPropTypes) {
       }}
       onPointerLeave={() => setIsFocused(false)}
     >
-      <div className={isFocused ? "glitch" : ""}>{props.children || null}</div>
+      <span className={isFocused ? "glitch" : ""}>
+        {props.children || null}
+      </span>
     </div>
   );
 }
