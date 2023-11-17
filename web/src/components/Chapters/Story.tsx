@@ -1,36 +1,16 @@
 // Vendor imports
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Howl } from "howler";
 import propTypes from "prop-types";
 
 // imports
 import story from "../../assets/story/story";
-
-//Import all the music
-import Angel_of_Mercy from "../../assets/music/Angel_of_Mercy.mp3";
-import Faceoff from "../../assets/music/Faceoff.mp3";
-import Arcade from "../../assets/music/Arcade.mp3";
-import Choose_Your_Path from "../../assets/music/Choose_Your_Path.mp3";
-import Dark_Times from "../../assets/music/Dark_Times.mp3";
-import Echoes_of_Time_v2 from "../../assets/music/Echoes_of_Time_v2.mp3";
-import Echoes_of_Time from "../../assets/music/Echoes_of_Time.mp3";
-import Plato_s_Cave from "../../assets/music/Plato_s_Cave.mp3";
-import The_Deal_is_Going_Down from "../../assets/music/The_Deal_is_Going_Down.mp3";
-import Scraping_The_Sewer from "../../assets/music/Scraping_The_Sewer.mp3";
-
-//Import all SFX
-import sos_mayday from "../../assets/sfx/morse/mp3/daytripper-sos-mayday.mp3";
-import stations from "../../assets/sfx/morse/mp3/kwahmah-stations-broadcasting_noise-reduced.mp3";
-import wps30 from "../../assets/sfx/morse/mp3/morse-30wps.mp3";
-import telecom from "../../assets/sfx/morse/mp3/timbre_telecom_heavily_edited.mp3";
-import transmission from "../../assets/sfx/morse/mp3/trebblofang__creepy_background_transmission.mp3";
-import pi from "../../assets/sfx/morse/mp3/trebblofang_pi_short.mp3";
-import jailSFX from "../../assets/sfx/jail/JailCellClose_combined.mp3";
+import { AvailableSFX, AvailableSongs } from "../../constants.ts";
 import * as images from "../../assets/ascii/images";
 
 export default function Story(props) {
   const [text, setText] = useState<Array<React.ReactNode | null>>([]);
-  const [morseSFX, setMorseSFX] = useState<Howl | null>(null); //The SFX file name to play
+  const [morseSFX, setMorseSFX] = useState<Howl | null>(null);
   const [SFXon, setSFXon] = useState(false); //Determines if SFX is on/off
   const [lastIntervalID, setLastIntervalID] = useState<NodeJS.Timer | null>(
     null
@@ -56,32 +36,14 @@ export default function Story(props) {
     }
   }, [SFXon, morseSFX, props.chapter]);
 
-  let Music = useMemo(
-    () => ({
-      Angel_of_Mercy: Angel_of_Mercy,
-      Faceoff: Faceoff,
-      Arcade: Arcade,
-      Choose_Your_Path: Choose_Your_Path,
-      Dark_Times: Dark_Times,
-      Echoes_of_Time: Echoes_of_Time,
-      Echoes_of_Time_v2: Echoes_of_Time_v2,
-      Plato_s_Cave: Plato_s_Cave,
-      The_Deal_is_Going_Down: The_Deal_is_Going_Down,
-      Scraping_The_Sewer: Scraping_The_Sewer,
-    }),
-    []
-  );
-
-  // Functions
-
   const newTypewriter = useCallback(
     (iSpeed?: number) => {
       if (!iSpeed) {
         iSpeed = 50; // time delay of print out
       }
-      var iIndex = 0; // start printing array at this posision
+      var iIndex = 0; // start printing array at this position
       var iArrLength = (textArray && textArray[0].length) || undefined; // the length of the text array
-      var iTextPos = 0; // initialise text position
+      var iTextPos = 0; // initialize text position
 
       let intervalID = setInterval(() => {
         setSFXon(true);
@@ -220,7 +182,7 @@ export default function Story(props) {
   }, [props.toggleButtons, props.chapter]);
 
   const playBackgroundMusic = useCallback(() => {
-    let song = Music[story[props.chapter].music || ""];
+    let song = AvailableSongs[story[props.chapter].music || ""];
     let bgMusic = new Howl({
       src: [song],
       volume: 0.25,
@@ -237,12 +199,11 @@ export default function Story(props) {
     });
     bgMusic.play();
     return bgMusic;
-  }, [props.chapter, Music]);
+  }, [props.chapter]);
 
   const setupSFX = useCallback(() => {
-    let SFXfile = SFX["pi"];
     let morseSFX = new Howl({
-      src: [SFXfile],
+      src: [AvailableSFX.pi],
       volume: 0.25,
       loop: true,
       preload: true,
@@ -258,13 +219,13 @@ export default function Story(props) {
     });
     setMorseSFX(morseSFX);
     return morseSFX;
-  }, [SFX]);
+  }, []);
 
   //On Initial Load
   useEffect(() => {
     console.log("<Story /> Initial Render");
 
-    let SFX = setupSFX();
+    let morseSFX = setupSFX();
     //Play bg music
     let bgMusic: Howl | null = null;
     if (story[props.chapter].music) {
@@ -273,8 +234,8 @@ export default function Story(props) {
 
     //Unmounting
     return () => {
-      if (SFX) {
-        SFX.stop();
+      if (morseSFX) {
+        morseSFX.stop();
       }
       bgMusic && bgMusic.stop();
     };
@@ -296,9 +257,8 @@ export default function Story(props) {
       setLastIntervalID(intervalID); //keep track of this typer
     }
     if (chapter === "prison") {
-      const SFXfile = SFX.jail;
       jailSFX = new Howl({
-        src: [SFXfile],
+        src: [AvailableSFX.jailSFX],
         volume: 0.5,
         loop: false,
         preload: true,
@@ -321,14 +281,7 @@ export default function Story(props) {
         jailSFX.stop();
       }
     };
-  }, [
-    props.chapter,
-    props.setSkip,
-    drawImage,
-    SFX.jail,
-    lastIntervalID,
-    newTypewriter,
-  ]);
+  }, [props.chapter, props.setSkip, drawImage, lastIntervalID, newTypewriter]);
 
   //Listen for Skipping
   useEffect(() => {

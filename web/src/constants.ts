@@ -8,6 +8,7 @@ import Echoes_of_Time_v2 from "./assets/music/Echoes_of_Time_v2.mp3";
 import Echoes_of_Time from "./assets/music/Echoes_of_Time.mp3";
 import Plato_s_Cave from "./assets/music/Plato_s_Cave.mp3";
 import The_Deal_is_Going_Down from "./assets/music/The_Deal_is_Going_Down.mp3";
+import Scraping_The_Sewer from "./assets/music/Scraping_The_Sewer.mp3";
 
 // SFX
 import sos_mayday from "./assets/sfx/morse/mp3/daytripper-sos-mayday.mp3";
@@ -18,6 +19,7 @@ import transmission from "./assets/sfx/morse/mp3/trebblofang__creepy_background_
 import pi from "./assets/sfx/morse/mp3/trebblofang_pi_short.mp3";
 import cipherMachine from "./assets/sfx/cipher_machine.mp3";
 import digitalGlitches from "./assets/sfx/digital_glitches.mp3";
+import jailSFX from "./assets/sfx/jail/JailCellClose_combined.mp3";
 
 const AvailableSongs = {
   Angel_of_Mercy,
@@ -29,6 +31,7 @@ const AvailableSongs = {
   Echoes_of_Time_v2,
   Plato_s_Cave,
   The_Deal_is_Going_Down,
+  Scraping_The_Sewer,
 };
 
 const AvailableSFX = {
@@ -40,6 +43,7 @@ const AvailableSFX = {
   pi,
   cipherMachine,
   digitalGlitches,
+  jailSFX,
 };
 
 export { AvailableSongs, AvailableSFX };
