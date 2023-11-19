@@ -1,13 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './assets/fonts/3270_fonts_2851f93/3270SemiNarrow.ttf';
-import './assets/fonts/green_screen/Greenscr.ttf';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./assets/fonts/3270_fonts_2851f93/3270SemiNarrow.ttf";
+import "./assets/fonts/green_screen/Greenscr.ttf";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
+// disable console logs in production
+if (process.env.NODE_ENV === "production") {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
