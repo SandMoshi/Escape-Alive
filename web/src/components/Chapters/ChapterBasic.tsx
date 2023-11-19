@@ -6,20 +6,26 @@ import propTypes from "prop-types";
 // imports
 import story from "../../assets/story/story.ts";
 import { AvailableSFX, AvailableSongs } from "../../constants.ts";
-import * as images from "../../assets/ascii/images.js";
 
-export default function ChapterBasic(props) {
+type ChapterBasicPropTypes = {
+  chapter: string;
+  toggleButtons: (arg: boolean) => void;
+  skip: boolean;
+  setSkip: (arg: boolean) => void;
+};
+
+export default function ChapterBasic(props: ChapterBasicPropTypes) {
   const [text, setText] = useState<Array<React.ReactNode | null>>([]);
   const morseSFX = useRef<Howl | null>(null);
   const jailSFX = useRef<Howl | null>(null);
   const bgMusic = useRef<Howl | null>(null);
   const [SFXon, setSFXon] = useState(false); //Determines if SFX is on/off
-  const lastIntervalID = useRef<NodeJS.Timer | null>(null);
+  const lastIntervalID = useRef<NodeJS.Timeout | null>(null);
   const [imageContent, setImageContent] = useState<React.ReactNode>(null);
   const setupComplete = useRef<boolean>(false);
 
   // set up text to print, each item in array is new line
-  var textArray = story[props.chapter].textArray;
+  var textArray = story[props.chapter]?.textArray;
 
   // Start/Stop SFX
   useEffect(() => {
@@ -48,7 +54,7 @@ export default function ChapterBasic(props) {
         iSpeed = 50; // time delay of print out
       }
       var iIndex = 0; // start printing array at this position
-      var iArrLength = (textArray && textArray[0].length) || undefined; // the length of the text array
+      var iArrLength = (textArray && textArray[0]?.length) || undefined; // the length of the text array
       var iTextPos = 0; // initialize text position
 
       let intervalID = setInterval(() => {
@@ -57,7 +63,7 @@ export default function ChapterBasic(props) {
         setText((text) => {
           text[iIndex] = (
             <p key={`line-${iIndex}`}>
-              {textArray && textArray[iIndex].substring(0, iTextPos)}
+              {textArray && textArray[iIndex]?.substring(0, iTextPos)}
               <span className="caret"></span>
             </p>
           );
@@ -74,7 +80,7 @@ export default function ChapterBasic(props) {
                 text[iIndex - 1] = (
                   <p key={`line-${iIndex - 1}`}>
                     {textArray &&
-                      textArray[iIndex - 1].substring(0, iArrLength)}
+                      textArray[iIndex - 1]?.substring(0, iArrLength)}
                   </p>
                 );
               }
@@ -86,13 +92,13 @@ export default function ChapterBasic(props) {
               return [...text];
             });
             //Write next line
-            iArrLength = textArray[iIndex].length; //Next line's length
+            iArrLength = textArray[iIndex]?.length; //Next line's length
           } else {
             //Make last line carat blink
             setText((text) => {
               text[iIndex - 1] = (
                 <p key={`line-${iIndex - 1}`}>
-                  {textArray && textArray[iIndex - 1].substring(0, iArrLength)}
+                  {textArray && textArray[iIndex - 1]?.substring(0, iArrLength)}
                   <span className="caret blink"></span>
                 </p>
               );
@@ -126,7 +132,7 @@ export default function ChapterBasic(props) {
     } else {
       // Setup the SFX first
       jailSFX.current = new Howl({
-        src: [AvailableSFX.jailSFX],
+        src: [AvailableSFX["jailSFX"] ?? ""],
         volume: 0.5,
         loop: false,
         preload: true,
@@ -166,17 +172,20 @@ export default function ChapterBasic(props) {
     }, 50);
   }, [textArray, props.setSkip, props.toggleButtons]);
 
-  const drawImage = useCallback(() => {
+  const drawImage = useCallback(async () => {
     setSFXon(false);
-    const fontSize = story[props.chapter].imageFontSize;
-    const imagePath = story[props.chapter].imagePath ?? "";
+    const fontSize = story[props.chapter]?.imageFontSize;
+    const imagePath = story[props.chapter]?.imagePath ?? "";
+    const imageName = story[props.chapter]?.imageName ?? "";
+    const imageModule = await import(`../../assets/${imagePath}`);
+    const art = imageModule[imageName];
     let image = (
       <pre>
         <p
           className={"ascii ascii__animated collapsed"}
           style={{ textAlign: "center", fontSize: fontSize }}
         >
-          {images[imagePath]}
+          {art}
         </p>
       </pre>
     );
@@ -189,7 +198,7 @@ export default function ChapterBasic(props) {
             className={"ascii ascii__animated"}
             style={{ textAlign: "center", fontSize: fontSize }}
           >
-            {images[imagePath]}
+            {art}
           </p>
         </pre>
       );
@@ -209,9 +218,9 @@ export default function ChapterBasic(props) {
   }, [props.toggleButtons, props.chapter]);
 
   const playBackgroundMusic = useCallback(() => {
-    let song = AvailableSongs[story[props.chapter].music || ""];
+    let song = AvailableSongs[story[props.chapter]?.music || ""];
     bgMusic.current = new Howl({
-      src: [song],
+      src: [song ?? ""],
       volume: 0.25,
       loop: true,
       onloaderror: (err) => {
@@ -230,7 +239,7 @@ export default function ChapterBasic(props) {
 
   const setupMorseSFX = useCallback(() => {
     morseSFX.current = new Howl({
-      src: [AvailableSFX.pi],
+      src: [AvailableSFX["pi"] ?? ""],
       volume: 0.25,
       loop: true,
       preload: true,
@@ -256,7 +265,7 @@ export default function ChapterBasic(props) {
       SFXon && morseSFX.current && morseSFX.current.play();
 
       //Play bg music
-      if (story[props.chapter].music) {
+      if (story[props.chapter]?.music) {
         playBackgroundMusic();
       }
       // Prevent use-effect from running again
@@ -273,7 +282,7 @@ export default function ChapterBasic(props) {
     const setSkip = props.setSkip;
     setSkip(false);
     const chapter = props.chapter;
-    if (!story[chapter].textArray && story[chapter].imagePath) {
+    if (!story[chapter]?.textArray && story[chapter]?.imagePath) {
       drawImage();
     } else {
       lastIntervalID.current = newTypewriter(); //start typing new chapter
@@ -295,8 +304,8 @@ export default function ChapterBasic(props) {
     if (props.skip !== true) {
       return;
     } else if (
-      !story[props.chapter].textArray &&
-      story[props.chapter].imagePath
+      !story[props.chapter]?.textArray &&
+      story[props.chapter]?.imagePath
     ) {
       return;
     }
@@ -304,7 +313,7 @@ export default function ChapterBasic(props) {
     drawText();
   }, [props.skip, drawText, props.chapter]);
 
-  let lines = text.map((line, index) => {
+  let lines = text.map((line) => {
     return line;
   });
 

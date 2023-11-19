@@ -21,7 +21,8 @@ import cipherMachine from "./assets/sfx/cipher_machine.mp3";
 import digitalGlitches from "./assets/sfx/digital_glitches.mp3";
 import jailSFX from "./assets/sfx/jail/JailCellClose_combined.mp3";
 
-const AvailableSongs = {
+// *.mp3 modules are typed as strings
+const AvailableSongs: { [key: string]: string } = {
   Angel_of_Mercy,
   Faceoff,
   Arcade,
@@ -34,7 +35,8 @@ const AvailableSongs = {
   Scraping_The_Sewer,
 };
 
-const AvailableSFX = {
+// *.mp3 modules are typed as strings
+const AvailableSFX: { [key: string]: string } = {
   sos_mayday,
   stations,
   wps30,

@@ -3,6 +3,7 @@ type Story = {
     chapter: number | string;
     music?: string;
     imagePath?: string;
+    imageName?: string;
     imageFontSize?: string;
     textArray: Array<string> | null;
     options: {
@@ -68,7 +69,8 @@ const story: Story = {
     chapter: "0b",
     music: "Echoes_of_Time",
     textArray: null,
-    imagePath: "chapter1",
+    imagePath: "ascii/textImages.js",
+    imageName: "chapter1",
     imageFontSize: "0.4rem",
     options: {
       a: {
@@ -159,7 +161,8 @@ const story: Story = {
     chapter: "2",
     music: "Echoes_of_Time",
     textArray: null,
-    imagePath: "iraqSyria3b",
+    imagePath: "ascii/iraqSyria.js",
+    imageName: "iraqSyria3b",
     imageFontSize: "0.35rem",
     options: {
       a: {
@@ -1669,7 +1672,8 @@ const story: Story = {
     chapter: "prison",
     music: "Scraping_The_Sewer",
     textArray: null,
-    imagePath: "prison1",
+    imagePath: "ascii/textImages.js",
+    imageName: "prison1",
     imageFontSize: "1rem",
     options: {
       a: {
