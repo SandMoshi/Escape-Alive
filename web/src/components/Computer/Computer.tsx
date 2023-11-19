@@ -1,21 +1,21 @@
 // Vendor imports
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 // imports
-import bg_1 from "../../assets/bg/Background_1.png";
 import Screen from "../Screen/Screen";
 import ButtonGroup from "../ButtonGroup/ButtonGroup";
+
+// asset imports
+import bg_1 from "../../assets/bg/Background_1.png";
 import rotatePhoneIcon from "../../assets/icons/phone-position-rotation-from-horizontal-to-vertical.svg";
 
 // style imports
 import "./computer.css";
 
-export default function Computer(props) {
-  const [chapter, setChapter] = useState("0");
-  const [showButtons, toggleButtons] = useState(false);
-  const [skip, setSkip] = useState(false);
-  // const [showSkip, setShowSkip] = useState(true);
-  const skipEl = useRef(null);
+export default function Computer() {
+  const [chapter, setChapter] = useState<string>("0");
+  const [showButtons, toggleButtons] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(false);
 
   useEffect(() => {
     console.log("new chapter:", chapter);

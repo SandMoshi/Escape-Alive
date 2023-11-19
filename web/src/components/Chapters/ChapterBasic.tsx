@@ -4,11 +4,11 @@ import { Howl } from "howler";
 import propTypes from "prop-types";
 
 // imports
-import story from "../../assets/story/story";
+import story from "../../assets/story/story.ts";
 import { AvailableSFX, AvailableSongs } from "../../constants.ts";
-import * as images from "../../assets/ascii/images";
+import * as images from "../../assets/ascii/images.js";
 
-export default function Story(props) {
+export default function ChapterBasic(props) {
   const [text, setText] = useState<Array<React.ReactNode | null>>([]);
   const morseSFX = useRef<Howl | null>(null);
   const jailSFX = useRef<Howl | null>(null);
@@ -316,7 +316,7 @@ export default function Story(props) {
   );
 }
 
-Story.propTypes = {
+ChapterBasic.propTypes = {
   chapter: propTypes.string.isRequired,
   toggleButtons: propTypes.func.isRequired,
   skip: propTypes.bool.isRequired,
