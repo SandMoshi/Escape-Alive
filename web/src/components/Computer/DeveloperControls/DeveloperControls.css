@@ -1,0 +1,18 @@
+.container {
+  background: white;
+  border: solid 2px black;
+  padding: 20;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  width: 40px;
+}
+
+.btn {
+  width: 40px;
+}

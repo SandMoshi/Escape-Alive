@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 // imports
 import Screen from "../Screen/Screen";
 import ButtonGroup from "../ButtonGroup/ButtonGroup";
+import { DeveloperControls } from "./DeveloperControls/DeveloperControls";
 
 // asset imports
 import bg_1 from "../../assets/bg/Background_1.png";
@@ -36,6 +37,10 @@ export default function Computer() {
         />
         <p>Please rotate your screen</p>
       </div>
+      {/* For DEVELOPMENT ONLY */}
+      {process.env["NODE_ENV"] === "development" && (
+        <DeveloperControls setChapter={setChapter} />
+      )}
       <div className="computer">
         <ButtonGroup
           chapter={chapter}
