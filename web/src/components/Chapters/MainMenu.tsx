@@ -37,7 +37,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
   const glitchSFX = useRef<HowlSound | null>(null);
   const SFXList = useRef<Array<HowlSound | null>>([]);
 
-  var textArray = story[0].textArray;
+  var textArray = story[0]?.textArray;
 
   // Mount/Unmount logic
   useEffect(() => {
@@ -50,9 +50,9 @@ export default function MainMenu(props: MainMenuPropTypes) {
 
   const setupSFX = () => {
     //Load SFX
-    let SFXfile1 = AvailableSFX["pi"];
-    let SFXfile2 = AvailableSFX["cipherMachine"];
-    let glitchFile = AvailableSFX["digitalGlitches"];
+    let SFXfile1 = AvailableSFX["pi"] ?? "";
+    let SFXfile2 = AvailableSFX["cipherMachine"] ?? "";
+    let glitchFile = AvailableSFX["digitalGlitches"] ?? "";
     morseSFX.current = new Howl({
       src: [SFXfile1],
       volume: 0.25,
@@ -118,7 +118,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
   // Functions
   var iSpeed = 100; // time delay of print out
   var iIndex = 0; // start printing array at this posision
-  var iArrLength = textArray ? textArray[0].length : undefined; // the length of the text array
+  var iArrLength = textArray ? textArray[0]?.length : 0; // the length of the text array
   var iScrollAt = 20; // start scrolling up at this many lines
 
   var iTextPos = 0; // initialize text position
@@ -138,11 +138,15 @@ export default function MainMenu(props: MainMenuPropTypes) {
       sContents[iIndex] = "";
     }
 
+    const sContent: string = sContents[iIndex] ?? "";
+    const textSubstring: string =
+      textArray[iIndex]?.substring(0, iTextPos) ?? "";
+
     // @ts-ignore
     setText((text: Array<React.ReactNode>) => {
       text[iIndex] = (
         <p key={`line-${iIndex}`}>
-          {sContents[iIndex] + textArray[iIndex].substring(0, iTextPos)}
+          {sContent + textSubstring}
           <span className="caret"></span>
         </p>
       );
@@ -156,12 +160,14 @@ export default function MainMenu(props: MainMenuPropTypes) {
         setMorseSFXon(false);
         setTimeout(() => {
           //Clear carat from previous line
+
+          const textSubstring: string =
+            textArray[iIndex - 1]?.substring(0, iArrLength ?? 0) ?? "";
           // @ts-ignore
           setText((text: Array<React.ReactNode>) => {
             text[iIndex - 1] = (
               <p key={`line-${iIndex - 1}`}>
-                {sContents[iIndex - 1] +
-                  textArray[iIndex - 1].substring(0, iArrLength)}
+                {sContents[iIndex - 1] + textSubstring}
               </p>
             );
             text[iIndex] = (
@@ -172,17 +178,18 @@ export default function MainMenu(props: MainMenuPropTypes) {
             return [...text];
           });
           //Write next line
-          iArrLength = textArray[iIndex].length; //next line's length
+          iArrLength = textArray[iIndex]?.length; //next line's length
           typewriter(textArray);
         }, 1500);
       } else {
         //Make last line carat blink
+        const textSubstring: string =
+          textArray[iIndex - 1]?.substring(0, iArrLength) ?? "";
         // @ts-ignore
         setText((text: Array<React.ReactNode>) => {
           text[iIndex - 1] = (
             <p key={`line-${iIndex - 1}`}>
-              {sContents[iIndex - 1] +
-                textArray[iIndex - 1].substring(0, iArrLength)}
+              {sContents[iIndex - 1] + textSubstring}
               <span className="caret blink"></span>
             </p>
           );
@@ -201,7 +208,8 @@ export default function MainMenu(props: MainMenuPropTypes) {
   };
 
   const playBackgroundMusic = () => {
-    let song = story[0].music && AvailableSongs[story[0].music];
+    let song =
+      (story && story[0]?.music && AvailableSongs[story[0].music]) ?? "";
     let bgMusic = new Howl({
       src: [song],
       volume: 0.25,
@@ -221,9 +229,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
   };
 
   //Render Functions
-  let lines = text.map((line, index) => {
-    return line;
-  });
+  let lines = text.map((line) => line);
 
   // typewriter sound effects
   useEffect(() => {
@@ -243,7 +249,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
     (firstTime?: boolean | string) => {
       scrambleText(
         descriptionRef.current,
-        textArray && textArray[0],
+        (textArray && textArray[0]) || null,
         () =>
           isTabActive
             ? firstTime
@@ -285,14 +291,14 @@ export default function MainMenu(props: MainMenuPropTypes) {
         console.log(lines);
         scrambleText(
           promptRef.current,
-          textArray && textArray[2],
+          (textArray && textArray[2]) || null,
           () => scrambleSFX.current?.play(),
           () => scrambleSFX.current?.stop()
         );
         setTimeout(() => {
           scrambleText(
             promptRef.current,
-            textArray && textArray[3],
+            (textArray && textArray[3]) || null,
             () => scrambleSFX.current?.play(),
             () => scrambleSFX.current?.stop()
           );
@@ -304,7 +310,7 @@ export default function MainMenu(props: MainMenuPropTypes) {
 
   useEffect(() => {
     // Play bg music
-    if (story[0].music) {
+    if (story[0]?.music) {
       bgMusic.current = playBackgroundMusic();
     }
     // Start text animation
@@ -320,6 +326,15 @@ export default function MainMenu(props: MainMenuPropTypes) {
     // Run once on mount/unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // In Development, don't wait for animations to show buttons
+  useEffect(() => {
+    const toggleButtons = props.toggleButtons;
+    if (process.env["NODE_ENV"] === "development") {
+      console.log("Immediately show menu buttons in development mode");
+      setTimeout(() => toggleButtons(true));
+    }
+  }, [props.toggleButtons]);
 
   return (
     <React.Fragment>
