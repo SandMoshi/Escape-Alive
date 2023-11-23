@@ -1,4 +1,4 @@
-const chapter = `
+const chapter: string = `
         CCCCCCCCCCCC  HHHHHHHHH     HHHHHHHHH               AAA               PPPPPPPPPPPPPPPPP   TTTTTTTTTTTTTTTTTTTTTTT EEEEEEEEEEEEEEEEEEEEEE RRRRRRRRRRRRRRRRR       
      CCC::::::::::::C H:::::::H     H:::::::H              A:::A              P::::::::::::::::P  T:::::::::::::::::::::T E::::::::::::::::::::E R::::::::::::::::R         
    CC:::::::::::::::C H:::::::H     H:::::::H             A:::::A             P::::::PPPPPP:::::P T:::::::::::::::::::::T E::::::::::::::::::::E R::::::RRRRRR:::::R      
@@ -17,7 +17,7 @@ C:::::C                 H:::::H     H:::::H       A:::::::::::::::::::::A       
         CCCCCCCCCCCCC HHHHHHHHH     HHHHHHHHHAAAAAAA                   AAAAAAAPPPPPPPPPP                TTTTTTTTTTT       EEEEEEEEEEEEEEEEEEEEEE RRRRRRRR     RRRRRRR    
 `;
 
-const chapter1 = `
+const chapter1: string = `
 
 
 
@@ -48,7 +48,7 @@ C:::::C                 H:::::H     H:::::H        A:::::::::::::::::::::A      
         
 `;
 
-export const chapter1b = `
+const chapter1b: string = `
 
 
 
@@ -68,7 +68,7 @@ export const chapter1b = `
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝        ╚═╝   ╚══════╝╚═╝  ╚═╝     ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 `;
 
-const prison1 = `
+const prison1: string = `
 
 
 ██████╗ ██████╗ ██╗███████╗ ██████╗ ███╗   ██╗
@@ -92,7 +92,7 @@ const prison1 = `
 
 `;
 
-const prison2 = `
+const prison2: string = `
 
 
  ██▓███   ██▀███   ██▓  ██████  ▒█████   ███▄    █ 
@@ -108,7 +108,7 @@ const prison2 = `
 
 `;
 
-const TBD = `
+const TBD: string = `
 
 
 
@@ -130,4 +130,4 @@ const TBD = `
 
 `;
 
-export { chapter, chapter1, prison1, prison2, TBD };
+export { chapter, chapter1, chapter1b, prison1, prison2, TBD };

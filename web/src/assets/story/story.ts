@@ -69,7 +69,7 @@ const story: Story = {
     chapter: "0b",
     music: "Echoes_of_Time",
     textArray: null,
-    imagePath: "ascii/textImages.js",
+    imagePath: "ascii/textImages.ts",
     imageName: "chapter1",
     imageFontSize: "0.4rem",
     options: {
@@ -161,7 +161,7 @@ const story: Story = {
     chapter: "2",
     music: "Echoes_of_Time",
     textArray: null,
-    imagePath: "ascii/iraqSyria.js",
+    imagePath: "ascii/iraqSyria.ts",
     imageName: "iraqSyria3b",
     imageFontSize: "0.35rem",
     options: {
@@ -1672,7 +1672,7 @@ const story: Story = {
     chapter: "prison",
     music: "Scraping_The_Sewer",
     textArray: null,
-    imagePath: "ascii/textImages.js",
+    imagePath: "ascii/textImages.ts",
     imageName: "prison1",
     imageFontSize: "1rem",
     options: {
