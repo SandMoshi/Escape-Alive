@@ -317,6 +317,8 @@ export default function ChapterBasic(props: ChapterBasicPropTypes) {
     return line;
   });
 
+  // Set the checkpoint as needed
+
   return (
     <React.Fragment>
       {imageContent}

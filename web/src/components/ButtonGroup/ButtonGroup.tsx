@@ -12,12 +12,14 @@ import "./ButtonGroup.css";
 import "../utils/glitchTextEffect.css";
 
 type ButtonGroupPropTypes = {
-  setChapter: Function;
+  setChapter: (chapter: string) => void;
   chapter: number | string;
   toggleButtons: (arg: boolean) => void;
   toggleSkip: Function;
   skip: boolean;
   showButtons: boolean;
+  setCheckpoint: (checkpoint: string | null) => void;
+  checkpoint: string | null;
 };
 
 function ButtonGroup(props: ButtonGroupPropTypes) {
@@ -37,30 +39,46 @@ function ButtonGroup(props: ButtonGroupPropTypes) {
         unmountOnExit
       >
         <div className="btngroup">
-          {story[props.chapter].options.a && (
+          {/* Special Checkpoint Button */}
+          {props.checkpoint && (
             <Button
-              to={story[props.chapter]?.options.a?.goToChapter}
+              to={props.checkpoint}
               toggleButtons={props.toggleButtons}
               setChapter={props.setChapter}
+              setCheckpoint={props.setCheckpoint}
             >
-              {story[props.chapter].options.a?.buttonText}
+              Reload Checkpoint
             </Button>
           )}
 
-          {story[props.chapter].options.b && (
+          {story[props.chapter]?.options?.["a"] && (
             <Button
-              to={story[props.chapter].options.b?.goToChapter}
+              to={story[props.chapter]?.options?.["a"]?.goToChapter}
               toggleButtons={props.toggleButtons}
               setChapter={props.setChapter}
+              setCheckpoint={props.setCheckpoint}
+              checkpoint={story[props.chapter]?.options?.["a"]?.checkpoint}
             >
-              {story[props.chapter].options.b?.buttonText}
+              {story[props.chapter]?.options?.["a"]?.buttonText}
+            </Button>
+          )}
+
+          {story[props.chapter]?.options?.["b"] && (
+            <Button
+              to={story[props.chapter]?.options?.["b"]?.goToChapter}
+              toggleButtons={props.toggleButtons}
+              setChapter={props.setChapter}
+              setCheckpoint={props.setCheckpoint}
+              checkpoint={story[props.chapter]?.options?.["b"]?.checkpoint}
+            >
+              {story[props.chapter]?.options?.["b"]?.buttonText}
             </Button>
           )}
         </div>
       </CSSTransition>
     );
     // Scenario 2: Show Skip button while text is being animated
-  } else if (story[props.chapter].textArray && !isMainMenu) {
+  } else if (story[props.chapter]?.textArray && !isMainMenu) {
     return (
       <div className="btngroup">
         <SkipButton />

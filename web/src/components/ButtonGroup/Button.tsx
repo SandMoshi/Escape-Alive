@@ -7,6 +7,8 @@ type ButtonPropTypes = {
   setChapter?: Function;
   onClickOverride?: Function;
   children: React.ReactNode;
+  setCheckpoint?: (checkpoint: string | null) => void;
+  checkpoint?: string | null;
 };
 
 function Button(props: ButtonPropTypes) {
@@ -14,6 +16,10 @@ function Button(props: ButtonPropTypes) {
 
   const goToChapter = (to: string | void) => {
     props.setChapter && props.setChapter(to);
+    props.setCheckpoint &&
+      props.setCheckpoint(props.checkpoint != null ? props.checkpoint : null);
+    if (props.checkpoint != null) {
+    }
   };
 
   return (

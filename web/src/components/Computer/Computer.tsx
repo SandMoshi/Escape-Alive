@@ -15,6 +15,7 @@ import "./computer.css";
 
 export default function Computer() {
   const [chapter, setChapter] = useState<string>("0");
+  const [checkpoint, setCheckpoint] = useState<string | null>(null);
   const [showButtons, toggleButtons] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
 
@@ -45,6 +46,8 @@ export default function Computer() {
         <ButtonGroup
           chapter={chapter}
           setChapter={setChapter}
+          setCheckpoint={setCheckpoint}
+          checkpoint={checkpoint}
           showButtons={showButtons}
           toggleButtons={toggleButtons}
           toggleSkip={toggleSkip}
